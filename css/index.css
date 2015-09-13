@@ -1,0 +1,12 @@
+body{
+    margin-top: 0;
+    margin-left: 0;
+    background-color: #f2f2f2;
+}
+
+#appContainer{
+    background-color: #FFFFFF;
+    width: 800px;
+    height: 600px;
+}
+
