@@ -41,10 +41,12 @@
         this.addChild(this.background, this.text);
 
         this.on("mousedown", this.handleMouseDown);
+        this.on("pressup", this.handlePressUp);
+
         this.on("click", this.handleClick);
 
         if(window.applicationModel.platformInfo.mobile){
-            this.on("pressup", this.handlePressUp);
+
         }
 
 
@@ -66,19 +68,16 @@
         this.background.graphics.beginFill(this.downColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);*/
     };
 
-    p.stageMouseUpHandler = function(event){
-        this.setState("up");
-        this.stage.removeEventListener("stagemouseup", this.stageMouseUpHandler);
-    };
+
 
     p.handlePressUp = function(event){
-       // this.setState("up");
+        this.setState("up");
         /*this.background.graphics.clear();
         this.background.graphics.beginFill(this.upColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);*/
     };
 
     p.handleClick = function (event) {
-        this.setState("up");
+       // this.setState("up");
        // alert("You clicked on a button: "+this.label);
         /*this.background.graphics.clear();
         this.background.graphics.beginFill(this.upColor).drawRoundRect(0,0,this.buttonWidth, this.buttonHeight,10);*/
