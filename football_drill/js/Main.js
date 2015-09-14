@@ -24,7 +24,7 @@
         //init easeljs stage
         window.stage = new createjs.Stage("appCanvas");
         if(window.applicationModel.platformInfo.mobile == false){
-            window.stage.enableMouseOver() ;
+            //window.stage.enableMouseOver() ;
         }
 
 

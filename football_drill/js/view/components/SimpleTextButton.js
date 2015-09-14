@@ -39,11 +39,18 @@
         this.background.graphics.beginFill(this.upColor).drawRoundRect(0, 0, this.buttonWidth, this.buttonHeight, 10);
 
         this.addChild(this.background, this.text);
+
         this.on("mousedown", this.handleMouseDown);
-        this.on("pressup", this.handlePressUp);
-        this.on("click", this.clickHandler);
-        this.on("rollover", this.handleRollOver);
-        this.on("rollout", this.handleRollOut);
+        this.on("click", this.handleClick);
+
+        if(window.applicationModel.platformInfo.mobile){
+            this.on("pressup", this.handlePressUp);
+        }
+
+
+        /*this.on("rollover", this.handleRollOver);
+        this.on("rollout", this.handleRollOut);*/
+
         this.cursor = "pointer";
 
         this.mouseChildren = false;
@@ -53,17 +60,25 @@
     } ;
 
     p.handleMouseDown = function(event){
-        this.background.graphics.clear();
-        this.background.graphics.beginFill(this.downColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);
+        this.setState("down");
+        //this.stage.addEventListener("stagemouseup", this.stageMouseUpHandler);
+        /*this.background.graphics.clear();
+        this.background.graphics.beginFill(this.downColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);*/
+    };
+
+    p.stageMouseUpHandler = function(event){
+        this.setState("up");
+        this.stage.removeEventListener("stagemouseup", this.stageMouseUpHandler);
     };
 
     p.handlePressUp = function(event){
-        this.background.graphics.clear();
-        this.background.graphics.beginFill(this.upColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);
+       // this.setState("up");
+        /*this.background.graphics.clear();
+        this.background.graphics.beginFill(this.upColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);*/
     };
 
     p.handleClick = function (event) {
-
+        this.setState("up");
        // alert("You clicked on a button: "+this.label);
         /*this.background.graphics.clear();
         this.background.graphics.beginFill(this.upColor).drawRoundRect(0,0,this.buttonWidth, this.buttonHeight,10);*/
@@ -82,6 +97,25 @@
     p.handleRollOut = function(event){
         /*this.background.graphics.clear();
         this.background.graphics.beginFill(this.upColor).drawRoundRect(0,0,this.buttonWidth, this.buttonHeight,10);*/
+    };
+
+    SimpleTextButton.prototype.setState = function(newState){
+        console.log("button went to state:" + newState);
+        var bgColor;
+      switch (newState){
+          case "down":
+                bgColor = this.downColor;
+              break;
+
+          case "up":
+              bgColor = this.upColor;
+              break;
+      }
+
+        if(bgColor){
+            this.background.graphics.clear();
+            this.background.graphics.beginFill(bgColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);
+        }
     };
 
     SimpleTextButton.prototype.clickHandler = function(evt){
