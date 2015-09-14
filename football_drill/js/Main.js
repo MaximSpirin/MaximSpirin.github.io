@@ -27,7 +27,10 @@
             //window.stage.enableMouseOver() ;
         }
 
-
+        //demo enable touch
+        createjs.Touch.enable(window.stage);
+        var supported = createjs.Touch.isSupported();
+        console.log('Touch supported = ',supported);
         //stage will call update() on every tick ie each 1/30 sec
         createjs.Ticker.addEventListener("tick", this.onTickHandler);
 
