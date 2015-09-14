@@ -7,7 +7,17 @@
     SimpleTextButton.prototype.background = null;
     SimpleTextButton.prototype.text = null;
 
-
+    /**
+     * Creates a simple text button
+     * @param label
+     * @param labelFont
+     * @param labelColor
+     * @param upColor
+     * @param downColor
+     * @param overColor
+     * @param buttonWidth
+     * @constructor
+     */
     function SimpleTextButton(label, labelFont, labelColor, upColor, downColor, overColor, buttonWidth) {
         this.Container_constructor();
         this.label = label;
@@ -99,7 +109,7 @@
     };
 
     SimpleTextButton.prototype.setState = function(newState){
-        console.log("button went to state:" + newState);
+        //console.log("button went to state:" + newState);
         var bgColor;
       switch (newState){
           case "down":
@@ -115,6 +125,10 @@
             this.background.graphics.clear();
             this.background.graphics.beginFill(bgColor).drawRoundRect(0,0,this.buttonWidth,this.buttonHeight,10);
         }
+    };
+
+    SimpleTextButton.prototype.destroy = function(){
+        this.removeAllEventListeners();
     };
 
     SimpleTextButton.prototype.clickHandler = function(evt){
