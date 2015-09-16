@@ -6,6 +6,7 @@
     // Usage: ApplicationEvent.EVENT_NAME = 'event_name'
     ApplicationEvent.SHOW_SCREEN = "show_screen";
     ApplicationEvent.SHOW_EDITOR = "show_editor";
+    ApplicationEvent.NAVIGATE_BACK = "navigate_back";
 
     //Each instance of this event will have an associated payload object
     ApplicationEvent.prototype.payload = null;
