@@ -7,6 +7,9 @@
     ApplicationEvent.SHOW_SCREEN = "show_screen";
     ApplicationEvent.SHOW_EDITOR = "show_editor";
     ApplicationEvent.NAVIGATE_BACK = "navigate_back";
+    ApplicationEvent.HIDE_CURRENT_FORM = "hide_current_form";
+    ApplicationEvent.ADD_COMPONENT = "add_component"
+
 
     //Each instance of this event will have an associated payload object
     ApplicationEvent.prototype.payload = null;

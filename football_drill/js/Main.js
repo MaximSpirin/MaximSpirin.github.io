@@ -30,6 +30,8 @@
 
         //proxy touch events(if running on touch device) into mouse events
         createjs.Touch.enable(window.stage);
+        window.stage.mouseMoveOutside = true;
+
         var supported = createjs.Touch.isSupported();
         console.log('Touch supported = ',supported);
 
@@ -93,7 +95,7 @@
             {id:"main-menu-background", src:"img/background_2_800_600.jpg", type:createjs.AbstractLoader.IMAGE}
         ];
 
-        Main.loadQueue = new createjs.LoadQueue();
+        Main.loadQueue = new createjs.LoadQueue(false,"",true);
         Main.loadQueue.on("complete", this.onAssetLoadComplete, this);
         Main.loadQueue.on("error", this.onAssetLoadFailure, this);
         Main.loadQueue.loadManifest(manifest);

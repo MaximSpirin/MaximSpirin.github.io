@@ -5,6 +5,8 @@
 (function (window) {
     //public variables
     Form.prototype.initParams;
+    Form.prototype.positiveCallback;
+    Form.prototype.negativeCallback;
 
     //static variable
     //Form.staticVar = "value";
@@ -13,7 +15,10 @@
     function Form(initParams) {
         //call superclass constructor
         this.Container_constructor();
-        this.initParams = initParams;
+        this.initParams = initParams ? initParams : {};
+        this.positiveCallback = this.initParams.positiveCallback;
+        this.negativeCallback = this.initParams.negativeCallback;
+
         //console.log("Form constructor");
         this.constructForm();
     }
@@ -22,6 +27,9 @@
 
     p.destroy = function(){
         //console.log("Form destroy");
+        this.initParams = null;
+        this.positiveCallback = null;
+        this.negativeCallback = null;
       //to be overridden by successors
     };
 
