@@ -6,30 +6,48 @@
     //public variables
     RectComponent.prototype.outlineShape;
 
-    //static variable
-    RectComponent.STD_WIDTH = 200;
-    RectComponent.STD_HEIGHT = 100;
+    //static variables
+    RectComponent.MIN_WIDTH = 75;
+    RectComponent.MIN_HEIGH = 50;
 
     //constructor
     function RectComponent() {
-        this.PresentationComponent_constructor();
-        //this.initialize();
+        this.BaseShapeRenderer_constructor();
+        this.initialize();
     }
 
     //extend this class from a superclass
-    var p = createjs.extend(RectComponent,PresentationComponent);
+    var p = createjs.extend(RectComponent, BaseShapeRenderer);
 
     p.initialize = function(){
-        this.PresentationComponent_initialize();
-
+        this.BaseShapeRenderer_initialize();
         this.outlineShape = new createjs.Shape();
-        this.outlineShape.graphics.setStrokeStyle(4).beginStroke("#ffffff");
-        this.outlineShape.graphics.drawRect(0,0,RectComponent.STD_WIDTH, RectComponent.STD_HEIGHT);
         this.addChild(this.outlineShape);
+
+
+    };
+
+    p.getBounds = function(){
+        var result = new createjs.Rectangle(this._data.position.x, this._data.position.y, this._data._width, this._data._height);
+        return result;
+    };
+
+    p.render = function(){
+        var renderData = this.getRendererData();
+        var w = renderData.getWidth();
+        var h = renderData.getHeight();
+        DrawingUtils.drawStrictSizeRectangle(this.outlineShape.graphics, 0, 0, renderData.getWidth(), renderData.getHeight(), 4, "#ffffff");
+
+        this.x = renderData.getPosition().x;
+        this.y = renderData.getPosition().y;
     };
 
     //Make aliases for all superclass methods: SuperClass_methodName
-    window.RectComponent = createjs.promote(RectComponent,"PresentationComponent");
+    window.RectComponent = createjs.promote(RectComponent,"BaseShapeRenderer");
+
+    p.getMinimalSize = function(){
+        return new createjs.Point(RectComponent.MIN_WIDTH, RectComponent.MIN_HEIGH);
+    };
 
 
 }(window));
