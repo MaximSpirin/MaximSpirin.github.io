@@ -90,12 +90,12 @@
         this.dispatcher.on(PresentationViewEvent.CREATE_EXTRA_TEAM_CLICK, createExtraClickHandler , this);
         this.dispatcher.on(PresentationViewEvent.CREATE_NEUTRAL_PLAYER_CLICK, createNeutralPlayerClickHandler , this);
         this.dispatcher.on(PresentationViewEvent.CREATE_CONE_CLICK, createConeClickHandler , this);
-        this.dispatcher.on(PresentationViewEvent.CREATE_DRIBBLING_CLICK, createDribblingClickHandler , this);
         this.dispatcher.on(PresentationViewEvent.CREATE_PLAYER_PATH_CLICK, createPlayerPathClickHandler , this);
         this.dispatcher.on(PresentationViewEvent.CREATE_BALL_PATH_CLICK, createBallPathClickHandler , this);
         this.dispatcher.on(PresentationViewEvent.CREATE_BALL_CLICK, createBallClickHandler , this);
         this.dispatcher.on(PresentationViewEvent.CREATE_BALLS_SUPPLY_CLICK, createBallsSupplyClickHandler , this);
         this.dispatcher.on(PresentationViewEvent.CREATE_ARC_CLICK, createArcClickHandler, this);
+        this.dispatcher.on(PresentationViewEvent.CREATE_DRIBBLING_CLICK, createDribblingClickHandler, this);
 
         this.dispatcher.on(PresentationViewEvent.COPY_ELEMENT_BUTTON_CLICK, copyElementClickHandler, this);
         this.dispatcher.on(PresentationViewEvent.PASTE_ELEMENT_BUTTON_CLICK, pasteElementClickHandler, this);
@@ -245,24 +245,49 @@
         this.addItemByModel(elementRendererData, true);
     }
 
-    function createDribblingClickHandler(presentationViewEvent) {
-                   
-    }
 
     function createPlayerPathClickHandler(presentationViewEvent) {
+        var elemId = createjs.UID.get();
+        var defaultStripWidth = 150;
+        var defaultStripHeight = PlayerMovementLine.STD_HEIGHT;
 
+        var elementPosition = getElementDefaultPosition.call(this, defaultStripWidth, defaultStripHeight);
+        elementPosition.y+=PlayerMovementLine.STD_HEIGHT/2;
+
+        var startPoint = new createjs.Point(elementPosition.x, elementPosition.y);
+        var endPoint = new createjs.Point(elementPosition.x + defaultStripWidth,  elementPosition.y);
+
+        var elementRendererData = new PlayerMovementVO(elemId, startPoint, endPoint, "rtl");
+        this.addItemByModel(elementRendererData, true);
     }
 
     function createBallPathClickHandler(presentationViewEvent) {
+        var elemId = createjs.UID.get();
+        var defaultStripWidth = 150;
+        var defaultStripHeight = BallMovementLine.STD_HEIGHT;
 
+        var elementPosition = getElementDefaultPosition.call(this, defaultStripWidth, defaultStripHeight);
+        elementPosition.y+=BallMovementLine.STD_HEIGHT/2;
+
+        var startPoint = new createjs.Point(elementPosition.x, elementPosition.y);
+        var endPoint = new createjs.Point(elementPosition.x + defaultStripWidth,  elementPosition.y);
+
+        var elementRendererData = new BallMovementVO(elemId, startPoint, endPoint, "rtl");
+        this.addItemByModel(elementRendererData, true);
     }
 
     function createBallClickHandler(presentationViewEvent) {
-
+        var elemId = createjs.UID.get();
+        var elemPosition = getElementDefaultPosition.call(this, BallComponent.STD_WIDTH, BallComponent.STD_HEIGHT);
+        var elementRendererData = new BallVO(elemId, elemPosition);
+        this.addItemByModel(elementRendererData, true);
     }
 
     function createBallsSupplyClickHandler(presentationViewEvent) {
-
+        var elemId = createjs.UID.get();
+        var elemPosition = getElementDefaultPosition.call(this, BallSupplyComponent.STD_WIDTH, BallSupplyComponent.STD_HEIGHT);
+        var elementRendererData = new BallSupplyVO(elemId, elemPosition);
+        this.addItemByModel(elementRendererData, true);
     }
 
     function createArcClickHandler(presentationViewEvent){
@@ -275,6 +300,21 @@
         var elementRendererData = new ArchedArrowVO(elemId, elemPosition, elementWidth, elementHeight, defaultArrowDirection, defaultArcRotation);
         this.addItemByModel(elementRendererData, true);
 
+    }
+
+    function createDribblingClickHandler(evt){
+        var elemId = createjs.UID.get();
+        var defaultStripWidth = DribblingLineSegment.STD_WIDTH*3;
+        var defaultStripHeight = DribblingLineSegment.STD_HEIGHT;
+
+        var elementPosition = getElementDefaultPosition.call(this, defaultStripWidth, defaultStripHeight);
+        elementPosition.y+=DribblingLineSegment.STD_HEIGHT/2;
+
+        var startPoint = new createjs.Point(elementPosition.x, elementPosition.y);
+        var endPoint = new createjs.Point(elementPosition.x + defaultStripWidth,  elementPosition.y);
+
+        var elementRendererData = new DribblingLineVO(elemId, startPoint, endPoint, "rtl");
+        this.addItemByModel(elementRendererData, true);
     }
 
     function getElementDefaultPosition(width, height){
@@ -301,23 +341,23 @@
                 break;
 
             case GraphicElementType.DRIBBLING_PLAYER:
-
+                result = new DribblingLine();
                 break;
 
             case GraphicElementType.PLAYER_MOVEMENT:
-
+                result = new PlayerMovementLine();
                 break;
 
             case GraphicElementType.BALL_MOVEMENT:
-
+                result = new BallMovementLine();
                 break;
 
             case GraphicElementType.BALL:
-
+                result = new BallComponent();
                 break;
 
             case GraphicElementType.BALLS_SUPPLY:
-
+                result = new BallSupplyComponent();
                 break;
 
             case GraphicElementType.ARC:
@@ -411,6 +451,31 @@
                         sourceElementData.arrowDirection, clonedRotation);
                 break;
 
+            case GraphicElementType.DRIBBLING_PLAYER:
+                    var startPointCloned = new createjs.Point(sourceElementData.startPoint.x + 16, sourceElementData.startPoint.y + 16);
+                    var endPointCloned = new createjs.Point(sourceElementData.endPoint.x + 16, sourceElementData.endPoint.y + 16);
+                    clonedElementData = new DribblingLineVO(newId, startPointCloned, endPointCloned, sourceElementData.direction);
+                break;
+
+            case GraphicElementType.PLAYER_MOVEMENT:
+                var startPointCloned = new createjs.Point(sourceElementData.startPoint.x + 16, sourceElementData.startPoint.y + 16);
+                var endPointCloned = new createjs.Point(sourceElementData.endPoint.x + 16, sourceElementData.endPoint.y + 16);
+                clonedElementData = new PlayerMovementVO(newId, startPointCloned, endPointCloned, sourceElementData.direction);
+                break;
+
+            case GraphicElementType.BALL_MOVEMENT:
+                var startPointCloned = new createjs.Point(sourceElementData.startPoint.x + 16, sourceElementData.startPoint.y + 16);
+                var endPointCloned = new createjs.Point(sourceElementData.endPoint.x + 16, sourceElementData.endPoint.y + 16);
+                clonedElementData = new BallMovementVO(newId, startPointCloned, endPointCloned, sourceElementData.direction);
+                break;
+
+            case GraphicElementType.BALL:
+                clonedElementData = new BallVO(newId, clonedPosition);
+                break;
+
+            case GraphicElementType.BALLS_SUPPLY:
+                clonedElementData = new BallSupplyVO(newId, clonedPosition);
+                break;
 
         }
 
