@@ -25,7 +25,7 @@
     MainMenuScreen.prototype.constructScreenUI = function(){
 
         //display background
-        this.backgroundImage = new createjs.Bitmap(Main.loadQueue.getResult("main-menu-background"));
+        this.backgroundImage = new createjs.Bitmap(DrillEditorApplication.loadQueue.getResult("main-menu-background"));
         this.addChild(this.backgroundImage);
 
         //create header text
@@ -60,7 +60,7 @@
 
 
     p.newDrillClickHandler = function(evt){
-        var newPresentation = window.main.createEmptyPresentation();
+        var newPresentation = PresentationController.createEmptyPresentation();
         if(newPresentation){
             window.eventDispatcher.dispatchEvent(new ApplicationEvent(ApplicationEvent.SHOW_EDITOR, {presentation: newPresentation}));
         }
