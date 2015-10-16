@@ -4,24 +4,28 @@
  */
 (function (window) {
     //public variables
-    Editor.prototype.backgroundShape;
-    Editor.prototype.exitButton;
-    Editor.prototype.presentation;
-    Editor.prototype.toolBarBounds;
-    Editor.prototype.componentsPalleteBounds;
-    Editor.prototype.pitchBounds;
-    Editor.prototype.pitchOutline;
-    Editor.prototype.pitch;
-    Editor.prototype.toolsPanel;
-    Editor.prototype.componentsPallete;
+    Editor.prototype.backgroundShape = null;
+    Editor.prototype.exitButton = null;
+    Editor.prototype.presentation = null;
+    Editor.prototype.toolBarBounds = null;
+    Editor.prototype.componentsPalleteBounds = null;
+    Editor.prototype.pitchBounds = null;
+    Editor.prototype.pitchOutline = null;
+    Editor.prototype.pitch = null;
+    Editor.prototype.toolsPanel = null;
+    Editor.prototype.componentsPallete = null;
+    Editor.prototype.presentationController = null;
+    Editor.prototype.pitchDisplayWidth = 0;
+    Editor.prototype.pitchDisplayHeight = 0;
 
 
     Editor.UI_CONTROLS_MARGIN = 10;
 
     //constructor
-    function Editor(presentation) {
+    function Editor() {
+    //function Editor(presentation) {
 
-        this.presentation = presentation;
+        //this.presentationController.presentation = presentation;
 
         // call constructor of the superclass
         this.AppScreen_constructor();
@@ -86,7 +90,9 @@
     };
 
     p.initialize = function(){
-        if(!this.presentation.pitchWidth || !this.presentation.pitchHeight){
+        this.presentationController = PresentationController.getInstance();
+
+        if(!this.presentationController.presentation.pitchWidth || !this.presentationController.presentation.pitchHeight){
             this.showForm(PitchSizeInputFormHTML,{
                 positiveCallback:this.sizeInputPositiveCallback,
                 negativeCallback:this.sizeInputNegativeCallback,
@@ -94,58 +100,59 @@
             });
         } else {
             //TODO: visualize presentation data
+            this.createPitchView();
         }
 
-        Dispatcher.getInstance().on(ApplicationEvent.NAVIGATE_BACK, exitToMainMenu, this);
+        //Dispatcher.getInstance().on(ApplicationEvent.NAVIGATE_BACK, exitToMainMenu, this);
 
     };
 
     //called when user hits proceed button on size input form
     p.sizeInputPositiveCallback = function(w,h){
         this.removeForm();
-        this.presentation.pitchWidth =  w;
-        this.presentation.pitchHeight = h;
-        this.redrawPitch();
+        this.presentationController.presentation.pitchWidth =  w;
+        this.presentationController.presentation.pitchHeight = h;
+        this.createPitchView();
     };
 
     p.sizeInputNegativeCallback = function(){
         //this.removeForm();
-        window.main.showAppScreen(AppScreen.MAIN_MENU);
+        window.drillEditorApplication.showAppScreen(AppScreen.MAIN_MENU);
     };
 
-    p.redrawPitch = function(){
-        var pitchDisplayWidth;
-        var pitchDisplayHeight;
+    p.createPitchView = function(){
 
-        var ratio = this.presentation.pitchWidth / this.presentation.pitchHeight;
+        var ratio = this.presentationController.presentation.pitchWidth / this.presentationController.presentation.pitchHeight;
 
-        if(this.presentation.pitchWidth > this.presentation.pitchHeight){
-            pitchDisplayWidth = this.pitchViewportBounds.width;
-            pitchDisplayHeight =  pitchDisplayWidth / ratio;
+        if(this.presentationController.presentation.pitchWidth > this.presentationController.presentation.pitchHeight){
+            this.pitchDisplayWidth = this.pitchViewportBounds.width;
+            this.pitchDisplayHeight =  this.pitchDisplayWidth / ratio;
         } else {
-            pitchDisplayHeight = this.pitchViewportBounds.height;
-            pitchDisplayWidth = ratio * pitchDisplayHeight;
+            this.pitchDisplayHeight = this.pitchViewportBounds.height;
+            this.pitchDisplayWidth = ratio * this.pitchDisplayHeight;
         }
 
-        if(pitchDisplayHeight > this.pitchViewportBounds.height){
-            var prevH = pitchDisplayHeight;
-            pitchDisplayHeight = this.pitchViewportBounds.height;
-            pitchDisplayWidth = pitchDisplayHeight * (pitchDisplayWidth/prevH);
-        } else if(pitchDisplayWidth > this.pitchViewportBounds.width){
-            var prevW = pitchDisplayWidth;
-            pitchDisplayWidth = this.pitchViewportBounds.width;
-            pitchDisplayHeight = pitchDisplayWidth/(prevW/pitchDisplayHeight)
+        if(this.pitchDisplayHeight > this.pitchViewportBounds.height){
+            var prevH = this.pitchDisplayHeight;
+            this.pitchDisplayHeight = this.pitchViewportBounds.height;
+            this.pitchDisplayWidth = this.pitchDisplayHeight * (this.pitchDisplayWidth/prevH);
+        } else if(this.pitchDisplayWidth > this.pitchViewportBounds.width){
+            var prevW = this.pitchDisplayWidth;
+            this.pitchDisplayWidth = this.pitchViewportBounds.width;
+            this.pitchDisplayHeight = this.pitchDisplayWidth/(prevW/this.pitchDisplayHeight)
         }
 
-        ApplicationModel.getInstance().mpp = this.presentation.pitchWidth/pitchDisplayWidth;
+        ApplicationModel.getInstance().mpp = this.presentationController.presentation.pitchWidth/this.pitchDisplayWidth;
 
-        this.pitch.setSize(pitchDisplayWidth, pitchDisplayHeight);
+        this.pitch.setSize(this.pitchDisplayWidth, this.pitchDisplayHeight);
 
-        this.pitch.x = this.pitchViewportBounds.x + this.pitchViewportBounds.width/2 - pitchDisplayWidth/2;
-        this.pitch.y = this.pitchViewportBounds.y + this.pitchViewportBounds.height/2 - pitchDisplayHeight/2;
+        this.pitch.x = this.pitchViewportBounds.x + this.pitchViewportBounds.width/2 - this.pitchDisplayWidth/2;
+        this.pitch.y = this.pitchViewportBounds.y + this.pitchViewportBounds.height/2 - this.pitchDisplayHeight/2;
 
+        console.warn("pitch size ratio = " + Number(this.pitchDisplayWidth/this.pitchDisplayHeight).toFixed(4));
 
-        console.warn("pitch size ratio = " + Number(pitchDisplayWidth/pitchDisplayHeight).toFixed(4));
+        Dispatcher.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.PITCH_VIEW_CREATED));
+
 
     };
 
@@ -153,15 +160,15 @@
         this.AppScreen_destroy();
 
         //destroy things related to Editor
-        Dispatcher.getInstance().off(ApplicationEvent.NAVIGATE_BACK, exitToMainMenu);
+        //Dispatcher.getInstance().off(ApplicationEvent.NAVIGATE_BACK, exitToMainMenu);
 
         console.log("Editor destroyed");
     };
 
-    function exitToMainMenu(){
+    /*function exitToMainMenu(){
         //TODO: exit properly from the edit mode - possible show an yes/no dialog, dispose current presentation
-        window.main.showAppScreen(AppScreen.MAIN_MENU);
-    }
+        window.drillEditorApplication.showAppScreen(AppScreen.MAIN_MENU);
+    }*/
 
 
 

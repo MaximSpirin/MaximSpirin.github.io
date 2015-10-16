@@ -7,7 +7,7 @@
     PresentationController.prototype.presentation = null;
     PresentationController.prototype.presentationView = null;
     PresentationController.prototype.dispatcher = null;
-    PresentationController.prototype.elements = null;
+    //PresentationController.prototype.elements = null;
     PresentationController.prototype.selectedElement = null;
 
     //static variable
@@ -26,25 +26,72 @@
     /**************************************** public methods ****************************************/
 
     /**
-     * Sets current presentation
-     * @param value
-     */
-    PresentationController.prototype.setPresentation = function (value) {
-        this.presentation = value;
-        this.elements = [];
-        this.selectedElement = null;
-
-    };
-
-    /**
      * Sets presentation view ie Pitch instance
      * @param value
      */
     PresentationController.prototype.setView = function(value){
         this.presentationView = value;
+
+
+    };
+    /**
+     * Creates a blank presentation and assigns it to presentation var
+     */
+    PresentationController.prototype.createEmptyPresentation = function(){
+        this.presentation = new Presentation(Presentation.DEFAULT_ID);
     };
 
 
+    /**
+     * Sets current presentation
+     * @param value
+     */
+    PresentationController.prototype.loadPresentation = function (presentationDTO) {
+        this.presentation = DTOUtils.presentationDTOToVO(presentationDTO);
+
+
+        //this.elements = [];
+        this.selectedElement = null;
+
+    };
+
+    /**
+     * Returns DTO of the current presentation.
+     */
+    PresentationController.prototype.getPresentationDTO = function(){
+
+        if(!this.presentation){
+            return null;
+        }
+
+        var canvas = document.getElementById('appCanvas');
+        var imageDataString = null;
+        var imageDataFormatPrefix = "data:image/png;base64,";
+
+        if(this.presentationView){
+
+            Dispatcher.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.ELEMENT_SELECTED,{data:null}));
+            window.stage.update();
+
+            imageDataString = CanvasUtils.getCanvasSegmentData(canvas,
+                this.presentationView.x,
+                this.presentationView.y,
+                this.presentationView.componentWidth,
+                this.presentationView.componentHeight);
+
+                //cut "data:image/png;base64," from the data string
+                var dataFormatIndex = imageDataString.indexOf(imageDataFormatPrefix);
+
+                if(dataFormatIndex>=0){
+                    imageDataString = imageDataString.substr(dataFormatIndex + imageDataFormatPrefix.length);
+                }
+        }
+
+        var presentationDTO = DTOUtils.presentationToDTO(this.presentation);
+        presentationDTO.drillImageData = imageDataString ;
+        presentationDTO.drillImageFormat = imageDataString ? imageDataFormatPrefix : null;
+        return presentationDTO;
+    };
 
     /*************************************** private functions *************************************/
     function initialize() {
@@ -65,10 +112,12 @@
         this.dispatcher.on(PresentationViewEvent.CREATE_DRIBBLING_CLICK, createDribblingClickHandler, this);
         this.dispatcher.on(PresentationViewEvent.COPY_ELEMENT_BUTTON_CLICK, copyElementClickHandler, this);
         this.dispatcher.on(PresentationViewEvent.PASTE_ELEMENT_BUTTON_CLICK, pasteElementClickHandler, this);
+        this.dispatcher.on(PresentationViewEvent.BACK_BUTTON_CLICK, backButtonClickHandler, this);
 
         this.dispatcher.on(ApplicationEvent.ELEMENT_SELECTED, elementSelectedHandler, this);
-        this.dispatcher.on(PresentationViewEvent.DELETE_ELEMENT, elementDeletedHandler, this);
+        this.dispatcher.on(PresentationViewEvent.DELETE_ELEMENT, deleteElementHandler, this);
         this.dispatcher.on(PresentationViewEvent.SWAP_DIRECTIONS_BUTTON_CLICK, swapDirectionsClickHandler, this);
+        this.dispatcher.on(ApplicationEvent.PITCH_VIEW_CREATED, pitchViewCreatedHandler, this);
 
     }
 
@@ -85,12 +134,15 @@
             this.presentationView.elementsLayer.addChild(elementRenderer);
             itemModel.depth = this.presentationView.elementsLayer.numChildren - 1;
             Dispatcher.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.ELEMENT_SELECTED,{data:elementRenderer}));
-
+            this.presentation.elements.push(itemModel);
         } else {
-            var depth = Math.min(model.depth, this.presentationView.elementsLayer.numChildren);
+            var depth = Math.min(itemModel.depth, this.presentationView.elementsLayer.numChildren);
+            this.presentationView.elementsLayer.addChildAt(elementRenderer, depth);
         }
 
-        this.elements.push(elementRenderer);
+
+        //this.elements.push(elementRenderer);
+
         this.presentationView.elementsLayer.addChild(this.transformTool);
     };
 
@@ -132,7 +184,7 @@
                 result = new BallSupplyComponent();
                 break;
 
-            case GraphicElementType.ARC:
+            case GraphicElementType.ARCUATE_MOVEMENT:
                 result = new ArchedArrow();
                 break;
         }
@@ -193,7 +245,7 @@
                 clonedElementData.fillColor = sourceElementData.fillColor;
                 break;
 
-            case GraphicElementType.ARC:
+            case GraphicElementType.ARCUATE_MOVEMENT:
                 clonedElementData = new ArchedArrowVO(newId, clonedPosition,
                     clonedWidth, clonedHeight,
                     sourceElementData.arrowDirection, clonedRotation);
@@ -202,19 +254,19 @@
             case GraphicElementType.DRIBBLING_PLAYER:
                 var startPointCloned = new createjs.Point(sourceElementData.startPoint.x + 16, sourceElementData.startPoint.y + 16);
                 var endPointCloned = new createjs.Point(sourceElementData.endPoint.x + 16, sourceElementData.endPoint.y + 16);
-                clonedElementData = new DribblingLineVO(newId, startPointCloned, endPointCloned, sourceElementData.direction);
+                clonedElementData = new DribblingLineVO(newId, startPointCloned, endPointCloned, sourceElementData.arrowDirection);
                 break;
 
             case GraphicElementType.PLAYER_MOVEMENT:
                 var startPointCloned = new createjs.Point(sourceElementData.startPoint.x + 16, sourceElementData.startPoint.y + 16);
                 var endPointCloned = new createjs.Point(sourceElementData.endPoint.x + 16, sourceElementData.endPoint.y + 16);
-                clonedElementData = new PlayerMovementVO(newId, startPointCloned, endPointCloned, sourceElementData.direction);
+                clonedElementData = new PlayerMovementVO(newId, startPointCloned, endPointCloned, sourceElementData.arrowDirection);
                 break;
 
             case GraphicElementType.BALL_MOVEMENT:
                 var startPointCloned = new createjs.Point(sourceElementData.startPoint.x + 16, sourceElementData.startPoint.y + 16);
                 var endPointCloned = new createjs.Point(sourceElementData.endPoint.x + 16, sourceElementData.endPoint.y + 16);
-                clonedElementData = new BallMovementVO(newId, startPointCloned, endPointCloned, sourceElementData.direction);
+                clonedElementData = new BallMovementVO(newId, startPointCloned, endPointCloned, sourceElementData.arrowDirection);
                 break;
 
             case GraphicElementType.BALL:
@@ -234,13 +286,20 @@
 
     /*************************************** event handler *****************************************/
 
+    function pitchViewCreatedHandler(event){
+        for(var i=0; i<this.presentation.elements.length; i++){
+            var elementVO = this.presentation.elements[i];
+            addItemByModel.call(this,elementVO,false);
+        }
+    }
+
     function swapDirectionsClickHandler(evt){
         if(this.selectedElement){
             this.selectedElement.rendererData.invertArrowDirection();
         }
     }
 
-    function elementDeletedHandler(evt){
+    function deleteElementHandler(evt){
         if(this.selectedElement){
             // 1. destroy element
             this.selectedElement.destroy();
@@ -248,13 +307,25 @@
             // 2. remove it from screen and from elements array
             if(this.selectedElement.stage){
                 this.presentationView.elementsLayer.removeChild(this.selectedElement);
-                var elementIndex = this.elements.indexOf(this.selectedElement);
-                this.elements.splice(elementIndex, 1);
+                var elementDataIndex = this.presentation.elements.indexOf(this.selectedElement.rendererData);//TODO substitute with Presentation.removeElementById
+                this.presentation.elements.splice(elementDataIndex, 1);
             }
+
+            // loop between VOs and update their depths according to the depth of the views
+            for(var i=0; i<this.presentationView.elementsLayer.numChildren; i++){
+                var childElement = this.presentationView.elementsLayer.getChildAt(i);
+                childElement.rendererData.depth = i;
+                //TODO - sort Presentation.elements on "depth" by ascending
+
+                   /* console.info("element %d typeof %d has index of %d",
+                    childElement.rendererData.id, childElement.rendererData.type,
+                    childElement.rendererData.depth);*/
+            }
+
 
             this.selectedElement = null;
 
-            //3. deselect element
+            //3. remove selection
             Dispatcher.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.ELEMENT_SELECTED,{data:null}));
         }
     }
@@ -339,7 +410,7 @@
         var startPoint = new createjs.Point(elementPosition.x, elementPosition.y);
         var endPoint = new createjs.Point(elementPosition.x + defaultStripWidth,  elementPosition.y);
 
-        var elementRendererData = new PlayerMovementVO(elemId, startPoint, endPoint, "rtl");
+        var elementRendererData = new PlayerMovementVO(elemId, startPoint, endPoint, ArrowDirection.LEFT);
         addItemByModel.call(this, elementRendererData, true);
     }
 
@@ -354,7 +425,7 @@
         var startPoint = new createjs.Point(elementPosition.x, elementPosition.y);
         var endPoint = new createjs.Point(elementPosition.x + defaultStripWidth,  elementPosition.y);
 
-        var elementRendererData = new BallMovementVO(elemId, startPoint, endPoint, "rtl");
+        var elementRendererData = new BallMovementVO(elemId, startPoint, endPoint, ArrowDirection.LEFT);
         addItemByModel.call(this, elementRendererData, true);
     }
 
@@ -373,12 +444,12 @@
     }
 
     function createArcClickHandler(presentationViewEvent){
-        var defaultArrowDirection = "left";
+        var defaultArrowDirection = ArrowDirection.LEFT;
         var defaultArcRotation = 0;
         var elemId = createjs.UID.get();
         var elementWidth =  ArchedArrow.STD_WIDTH;
         var elementHeight =  ArchedArrow.STD_HEIGHT;
-        var elemPosition = getElementDefaultPosition.call(this, ArchedArrow.STD_WIDTH, ArchedArrow.STD_HEIGHT);
+        var elemPosition = getElementDefaultPosition.call(this, ArchedArrow.STD_WIDTH/2, ArchedArrow.STD_HEIGHT/2);
         var elementRendererData = new ArchedArrowVO(elemId, elemPosition, elementWidth, elementHeight, defaultArrowDirection, defaultArcRotation);
         addItemByModel.call(this, elementRendererData, true);
 
@@ -395,7 +466,7 @@
         var startPoint = new createjs.Point(elementPosition.x, elementPosition.y);
         var endPoint = new createjs.Point(elementPosition.x + defaultStripWidth,  elementPosition.y);
 
-        var elementRendererData = new DribblingLineVO(elemId, startPoint, endPoint, "rtl");
+        var elementRendererData = new DribblingLineVO(elemId, startPoint, endPoint, ArrowDirection.LEFT);
         addItemByModel.call(this, elementRendererData, true);
     }
 
@@ -413,6 +484,12 @@
         }
     }
 
+    function backButtonClickHandler(event){
+        this.getPresentationDTO();
+        this.setView(null);
+        this.dispatcher.dispatchEvent(new ApplicationEvent(ApplicationEvent.SHOW_SCREEN,{screenId:AppScreen.MAIN_MENU}));
+    }
+
     /*********************************** public static method *************************************/
 
     PresentationController.getInstance = function(){
@@ -424,15 +501,35 @@
         return PresentationController.instance;
     };
 
-
     PresentationController.createEmptyPresentation = function(){
-        var id = createjs.UID.get();
+        var id = "000000";
         var presentation = new Presentation(id);
 
         console.log("Created a new presentation with id= " + id);
 
         return presentation;
     };
+
+    /*PresentationController.DTOToPresentation = function(presentationDTO){
+        var result = new Presentation();
+        return result;
+    };*/
+
+    /*PresentationController.presentationToDTO = function(presentation){
+        var presentationDTO = {};
+        presentationDTO.drillId = presentation.id;
+        presentationDTO.playersCount = 1;
+        presentationDTO.equipmentRequired = {};
+        presentationDTO.activitiesRequired = {};
+        presentationDTO.elements = [];
+
+        for(var i=0; i<presentation.elements.length; i++){
+            var elementDTO = DTOUtils.elementVOToDTO(presentation.elements[i]);
+            presentationDTO.elements.push(elementDTO);
+        }
+
+        return presentationDTO;
+    };*/
 
     window.PresentationController = PresentationController;
 

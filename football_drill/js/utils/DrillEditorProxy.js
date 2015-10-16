@@ -1,30 +1,50 @@
 /**
  * Class DrillEditorProxy
- * Created by maxim_000 on 10/13/2015.
+ * Created by Max on 10/13/2015.
  */
 (function (window) {
     /******************* public variables *******************/
-    //DrillEditorProxy.prototype.createNewDrill = true/false;
-    //DrillEditorProxy.prototype.drillData = {drill_json};
+
 
     /******************* static variables *******************/
-    //DrillEditorProxy.staticVar = "value";
+    DrillEditorProxy.drillStartupData = null;   // Should be set by outer code. data of the drill that has to be rendered right after app start. If null then app starts with main menu view
+    DrillEditorProxy.drillsCollection = null; // Should be set by outer code. An array of drills that user could open through load drill view.
+
+    DrillEditorProxy.getDrillDataCallback = null; // Should be set by drill editor. Editor app function that returns data of the current drill
+    DrillEditorProxy.getDrillByIdCallback = null;  // Should be set by outer code.
 
     /********************** constructor *********************/
     function DrillEditorProxy() {
 
     }
-
-    //extend this class from a superclass
-    //var p = createjs.extend(DrillEditorProxy,SuperClass);
-
-    /******************** private methods *******************/
+    /******************* static methods *******************/
 
 
-    /******************** event handlers ********************/
+    /**
+     * Returns data of the current/last active drill created/opened through drill editor.
+     * Should be called from outer code
+     * @returns {*}
+     */
+    DrillEditorProxy.getEditedDrillData = function(){
+        var result;
+        if(DrillEditorProxy.getDrillDataCallback){
+            result = DrillEditorProxy.getDrillDataCallback();
+        }
+        return result;
+    };
 
-
-    /******************* public static method ***************/
+    /**
+     * Retrieves drill data by its id.
+     * Should be called from app side
+     * @param drillId
+     * @param successCallback
+     * @param failureCallback
+     */
+    DrillEditorProxy.getDrillDataById = function(drillId, successCallback, failureCallback){
+        if(DrillEditorProxy.getDrillByIdCallback){
+            DrillEditorProxy.getDrillByIdCallback(drillId, successCallback, failureCallback);
+        }
+    };
 
 
     window.DrillEditorProxy = DrillEditorProxy;

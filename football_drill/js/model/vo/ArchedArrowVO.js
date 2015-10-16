@@ -4,7 +4,7 @@
  */
 (function (window) {
     //public variables
-    ArchedArrowVO.prototype.arrowDirection = "left";
+    ArchedArrowVO.prototype.arrowDirection;
     ArchedArrowVO.prototype.startPointPosition = null;
     ArchedArrowVO.prototype.endPointPosition = null;
 
@@ -14,16 +14,19 @@
 
     //constructor
     function ArchedArrowVO(elemId, elemPosition, elementWidth, elementHeight, arrowDirection, rotation) {
-        this.arrowDirection = arrowDirection;
+        this.arrowDirection = (arrowDirection == ArrowDirection.RIGHT || arrowDirection == ArrowDirection.LEFT) ? arrowDirection : ArrowDirection.LEFT;
         this.rotation = rotation;
         this.setWidth(elementWidth);
         this.setHeight(elementHeight);
         //invoke constructor of superclass
-        this.GraphicItemVO_constructor(elemId, GraphicElementType.ARC, elemPosition);
+        this.GraphicItemVO_constructor(elemId, GraphicElementType.ARCUATE_MOVEMENT, elemPosition);
     }
 
     //extend this class from a superclass
     var p = createjs.extend(ArchedArrowVO, GraphicItemVO);
+
+    // flag for serialization
+    p.isActivity = true;
 
     p.invertArrowDirection = function(){
         if(this.arrowDirection == "left"){
