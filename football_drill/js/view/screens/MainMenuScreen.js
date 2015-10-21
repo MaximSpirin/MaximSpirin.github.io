@@ -48,26 +48,32 @@
         this.newDrillButton = new SimpleTextButton("New drill","25px Arial", "#000000", "#FFFFFF","#999999","#0000FF", 150);
         this.newDrillButton.x = ApplicationModel.APP_WIDTH/2 - 150/2;
         this.newDrillButton.y = 260;
-        this.newDrillButton.addEventListener("click", this.newDrillClickHandler);
+        this.newDrillButton.addEventListener("click", newDrillClickHandler);
         this.addChild(this.newDrillButton);
 
         this.loadDrillButton = new SimpleTextButton("Load drill","25px Arial", "#000000", "#FFFFFF","#999999","#0000FF", 150);
         this.loadDrillButton.x = ApplicationModel.APP_WIDTH/2 - 150/2;
         this.loadDrillButton.y = this.newDrillButton.y + 60;
+        this.loadDrillClickHandler = this.loadDrillButton.on("click", loadDrillClickHandler, this);
         this.addChild(this.loadDrillButton);
 
     };
 
+    /**************************************** event handlers **********************************************/
 
-    p.newDrillClickHandler = function(evt){
-
+    function newDrillClickHandler(evt){
         Dispatcher.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.NEW_DRILL_BUTTON_CLICK));
+    }
 
-        /*var newPresentation = PresentationController.createEmptyPresentation();
-        if(newPresentation){
-            window.eventDispatcher.dispatchEvent(new ApplicationEvent(ApplicationEvent.SHOW_EDITOR, {presentation: newPresentation}));
-        }*/
-    };
+    function loadDrillClickHandler(){
+        //Dispatcher.getInstance().dispatchEvent(new ApplicationEvent(ApplicationEvent.LOAD_DRILL_BUTTON_CLICK));
+
+        this.showForm(LoadDrillView,{
+            positiveCallback:null,
+            negativeCallback:null,
+            callbackScope: this
+        });
+    }
 
 
     /**************************** Overridden methods **************************/
@@ -83,6 +89,7 @@
         this.newDrillButton.destroy();
 
         this.loadDrillButton.removeAllEventListeners();
+        this.loadDrillButton.off("click", this.loadDrillClickHandler);
         this.loadDrillButton.destroy();
 
         console.log("MainMenuScreen.destroy()");
