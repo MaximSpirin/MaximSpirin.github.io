@@ -73,6 +73,7 @@
 
         this.offset = Math.random()*10;
         this.count = 0;
+        this.setBounds(0,0,this.buttonWidth, this.buttonHeight);
     } ;
 
     p.handleMouseDown = function(event){
