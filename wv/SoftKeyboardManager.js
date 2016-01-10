@@ -30,24 +30,30 @@
 
 
         jQuery("input").focus(function(){
+
+            jQuery('#secret_white').css('display','inherit');
+
            setTimeout(function(){
                console.log("scrolling page to bottom");
-               jQuery('#secret_white').css('display','inherit');
-               jQuery("html, body").animate({ scrollTop: $(document).height() - 400 }, 100);
 
-               //scroll to a particular element
-               //jQuery("html, body").animate({ scrollTop: $("#tp_user_fields_email").scrollTop() }, 500);
+               window.scroll(0, findPos(document.getElementById("tp_user_fields_email")));
 
-               /*var container = jQuery('#secret_container'),
-                   scrollTo = jQuery('#secret_white');
-
-               container.scrollTop(
-                   scrollTo.offset().top - container.offset().top + container.scrollTop()
-               );*/
            },1000);
         });
 
     }
+
+    //Finds y value of given object
+    function findPos(obj) {
+        var curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+            return [curtop];
+        }
+    }
+
 
     // public functions
     SoftKeyboardManager.prototype.publicFunction = function (param1) {
