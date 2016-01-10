@@ -1,12 +1,12 @@
 /**
- * Soft keyboard manager
+ * SoftKeyboardManager defines some custom behavior that will be executed
  */
 (function (window) {
     //public variables
     SoftKeyboardManager.prototype.publicVar = "value";
 
     //static variable
-    SoftKeyboardManager.staticVar = "value";
+    SoftKeyboardManager.version = "1.0.0";
 
     //constructor
     function SoftKeyboardManager(){
@@ -32,7 +32,18 @@
         jQuery("input").focus(function(){
            setTimeout(function(){
                console.log("scrolling page to bottom");
-               jQuery("html, body").animate({ scrollTop: $(document).height() }, 500);
+               jQuery('#secret_white').css('display','inherit');
+               jQuery("html, body").animate({ scrollTop: $(document).height() - 400 }, 100);
+
+               //scroll to a particular element
+               //jQuery("html, body").animate({ scrollTop: $("#tp_user_fields_email").scrollTop() }, 500);
+
+               /*var container = jQuery('#secret_container'),
+                   scrollTo = jQuery('#secret_white');
+
+               container.scrollTop(
+                   scrollTo.offset().top - container.offset().top + container.scrollTop()
+               );*/
            },1000);
         });
 
