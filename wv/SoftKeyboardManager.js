@@ -29,6 +29,13 @@
         };
 
 
+        jQuery("input").focus(function(){
+           setTimeout(function(){
+               console.log("scrolling page to bottom");
+               jQuery("html, body").animate({ scrollTop: $(document).height() }, 500);
+           },1000);
+        });
+
     }
 
     // public functions
