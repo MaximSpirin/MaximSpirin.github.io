@@ -33,12 +33,16 @@
 
             jQuery('#secret_white').css('display','inherit');
 
-           setTimeout(function(){
-               console.log("scrolling page to bottom");
+               setTimeout(function(){
+                   console.log("scrolling page to bottom");
 
-               window.scroll(0, findPos(document.getElementById("tp_user_fields_email")));
+                   window.scroll(0, findPos(document.getElementById("tp_user_fields_email")));
 
-           },1000);
+               },1000);
+        });
+
+        jQuery("input").focusout(function(){
+            jQuery('#secret_white').css('display','none');
         });
 
     }
