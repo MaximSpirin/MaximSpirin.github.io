@@ -1,0 +1,9 @@
+{
+	"error":0,
+	"tiVersionCode":210000,
+	"tiURL":"http://corsica.taxiinteractive.com/maximspirin/ti-fake-update.apk",
+	"monitorVersionCode":3,
+	"monitorURL":"http://corsica.taxiinteractive.com/maximspirin/monitor-fake-update.apk",
+	"updaterVersionCode":2,
+	"updaterURL":"http://corsica.taxiinteractive.com/maximspirin/updater-fake-update.apk"
+}
