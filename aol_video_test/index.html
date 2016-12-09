@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body style="padding: 0px; margin: 0px">
+
+<div class="entry-content">
+
+        <script src="http://cms.epiphany.digital/embedgen/js/rt_2.js"></script>
+        <script>
+            function jsCallbackReady(playerId) {
+            var kdp = document.getElementById(playerId);
+            }
+        </script>
+
+        <div style="width: 100%; height:100%;display: inline-block;position: relative;">
+                <!--<div id="dummy_8072949567" style="margin-top: 56.25%"></div>-->
+               <!-- <div id="epiphany_player_8072949567" style="position:absolute;top:0px;left: 0px;right: 0px;bottom: 0px;"></div>-->
+                <div id="epiphany_player_8072949567" style="width: 1280px; height: 800px; top: 0px; left: 0px"></div>
+
+
+                <script>
+                    function startKPlayer() {
+                        loadjsfile("https://cms.epiphany.digital/p/102/sp/10200/embedIframeJs/uiconf_id/11601813/partner_id/102", function() {
+                            loadKwidget()
+                        });
+                    }
+                </script>
+        <script>
+            function loadKwidget() {
+                mw.setConfig("Kaltura.EnableEmbedUiConfJs", true);
+                window.adCacheBreaker = (Math.random() * 10).toString().replace(/\./g, "").substring(0, 10);
+                window.adPageUrl = encodeURI(window.location.href);
+                kWidget.embed({
+                    "targetId": "epiphany_player_8072949567",
+                    "wid": "_102",
+                    "uiconf_id": 11601813,
+                    "entry_id": "0_i6aro2yv",
+                    "flashvars": {
+                        "streamerType": "auto",
+                        "autoMute": false,
+                        "autoPlay": true,
+                        "userAgentPlayerRules": {
+                            "loadingPolicy": "onDemand",
+                            "disableForceMobileHTML5": "true",
+                            "r1RegMatch": "/Chrome/(1[5-9]|[1-9][0-9]+)/",
+                            "r1LeadWithHTML5": "true",
+                            "r2Match": "Firefox/3.6",
+                            "r2ForceFlash": "false",
+                            "r3Match": "iPhone",
+                            "r3LeadWithHTML5": "true",
+                            "r4RegMatch": "/Firefox/([4-9]|[0-9][0-9])/",
+                            "r4LeadWithHTML5": "true",
+                            "r5RegMatch": "/Safari/([?]|[?][?])/",
+                            "r5LeadWithHTML5": "true"
+                        },
+                        "vast": {
+                            "plugin": true,
+                            "width": "0%",
+                            "height": "0%",
+                            "includeInLayout": false,
+                            "relativeTo": "PlayerHolder",
+                            "position": "before",
+                            //"prerollUrl": "http://ads.adaptv.advertising.com/a/h/BFB70o0RalcbLRT9r78ppqz8hNqJAVeIul_0xC50wbYupyY0G8dJTg==?cb={cachebreaker}&pageUrl=http%3A%2F%2Fonevideotestpage.com",
+                            "prerollUrl": "https://ads.adaptv.advertising.com/a/h/BFB70o0RalcbLRT9r78ppqz8hNqJAVeIul_0xC50wbYupyY0G8dJTg==?cb={cachebreaker}&pageUrl=http%3A%2F%2Fonevideotestpage.com",
+                            "numPreroll": "1",
+                            "storeSession": false,
+                            "preSequence": "1",
+                            "htmlCompanions": "testCompanion:300:250;testLongCompanion:728:90;",
+                            "timeout": "4"
+                        }
+                    },
+                    "cache_st": 8072949567,
+                    "params": {
+                        "wmode": "opaque"
+                    },
+                    "adsOnReplay": true
+                });
+            }
+            startKPlayer();
+        </script>
+    </p>
+</div>
+</body>
+
+</html>
