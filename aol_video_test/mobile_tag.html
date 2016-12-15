@@ -305,6 +305,13 @@
         });
         kWidget.addReadyCallback( function( playerId ){
             var kdp = document.getElementById( playerId );
+
+
+            window.playVideo = function () {
+                kdp.sendNotification("doPlay");
+            };
+
+
             kdp.kBind( 'mediaReady', function(){
                 // Seek to 30 seconds from the start of the video
                 console.warn("mediaReady");
@@ -312,6 +319,9 @@
                 //kdp.sendNotification("doPlay");
             })
         });
+        
+
+        
     }
     startKPlayer();
 </script>
