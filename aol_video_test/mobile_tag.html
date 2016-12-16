@@ -240,6 +240,8 @@
 
     function bodyLoadHandler() {
         TaxiInteractiveUtils.initialize();
+        TaxiInteractiveUtils.broadcastMessage("report_user_activity");
+        TaxiInteractiveUtils.broadcastMessage("log",{text:"AAAAAAAAA"});
 
         window.autoPlayMedia = function () {
             
