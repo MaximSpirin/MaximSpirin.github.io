@@ -75,6 +75,7 @@
         TaxiInteractiveUtils.broacastIntervalID = setInterval(TaxiInteractiveUtils.onBroadcastIntervalTick, TaxiInteractiveUtils.MESSAGE_BROADCAST_INTERVAL);
 
         console.log("TaxiInteractiveUtils initialized!");
+        alert("TaxiInteractiveUtils initialized!");
     };
 
     TaxiInteractiveUtils.onBroadcastIntervalTick = function () {
