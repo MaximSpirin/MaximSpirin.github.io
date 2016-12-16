@@ -326,6 +326,7 @@
                 // Seek to 30 seconds from the start of the video
                 console.warn("mediaReady");
 
+                TaxiInteractiveUtils.broadcastMessage("log",{text:"DO SOMETHING!!!"});
                 TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
 
                 //alert("MEDIA READY!");
