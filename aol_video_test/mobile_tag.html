@@ -233,39 +233,23 @@
     </style>
 
 <body onload="bodyLoadHandler()">
-
+<script src="embedgen/js/rt_2.js"></script>
 <script>
     function bodyLoadHandler() {
         TaxiInteractiveUtils.initialize();
         TaxiInteractiveUtils.broadcastMessage("report_user_activity");
     }
 
-</script>
-
-<div class="entry-content">
-    <div style="width: 100%;height: 100%;">
-        <div id="dummy_8072949567" style="margin-top: 56.25%"></div>
-        <div id="epiphany_player_8072949567" style="position:absolute;top:0px;left: 0px;right: 0px;bottom: 0px;"></div>
-    </div>
-</div>
-<!-- .entry-content -->
-
-
-<script src="embedgen/js/rt_2.js"></script>
-<script>
     function jsCallbackReady(playerId) {
         var kdp = document.getElementById(playerId);
     }
-</script>
-<script>
+
     function startKPlayer() {
         loadjsfile("http://cms.epiphany.digital/p/102/sp/10200/embedIframeJs/uiconf_id/11601813/partner_id/102", function () {
             loadKwidget()
         });
     }
-</script>
-<br/>
-<script>
+
     function loadKwidget() {
         mw.setConfig("Kaltura.EnableEmbedUiConfJs", true);
         window.adCacheBreaker = (Math.random() * 10).toString().replace(/\./g, "").substring(0, 10);
@@ -333,12 +317,22 @@
                 //kdp.sendNotification("doPlay");
             })
         });
-        
-
-        
     }
     startKPlayer();
+
 </script>
+
+<div class="entry-content">
+    <div style="width: 100%;height: 100%;">
+        <div id="dummy_8072949567" style="margin-top: 56.25%"></div>
+        <div id="epiphany_player_8072949567" style="position:absolute;top:0px;left: 0px;right: 0px;bottom: 0px;"></div>
+    </div>
+</div>
+<!-- .entry-content -->
+
+
+<br/>
+
 </body>
 
 </html>
