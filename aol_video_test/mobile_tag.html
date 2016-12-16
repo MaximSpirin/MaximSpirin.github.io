@@ -235,90 +235,94 @@
 <body onload="bodyLoadHandler()">
 <script src="embedgen/js/rt_2.js"></script>
 <script>
+
+
+
     function bodyLoadHandler() {
         TaxiInteractiveUtils.initialize();
-        TaxiInteractiveUtils.broadcastMessage("report_user_activity");
-    }
 
-    function jsCallbackReady(playerId) {
-        var kdp = document.getElementById(playerId);
-    }
+        function jsCallbackReady(playerId) {
+            var kdp = document.getElementById(playerId);
+        }
 
-    function startKPlayer() {
-        loadjsfile("http://cms.epiphany.digital/p/102/sp/10200/embedIframeJs/uiconf_id/11601813/partner_id/102", function () {
-            loadKwidget()
-        });
-    }
+        function startKPlayer() {
+            loadjsfile("http://cms.epiphany.digital/p/102/sp/10200/embedIframeJs/uiconf_id/11601813/partner_id/102", function () {
+                loadKwidget()
+            });
+        }
 
-    function loadKwidget() {
-        mw.setConfig("Kaltura.EnableEmbedUiConfJs", true);
-        window.adCacheBreaker = (Math.random() * 10).toString().replace(/\./g, "").substring(0, 10);
-        window.adPageUrl = encodeURI(window.location.href);
-        kWidget.embed({
-            "targetId": "epiphany_player_8072949567",
-            "wid": "_102",
-            "uiconf_id": 11601813,
-            "entry_id": "0_i6aro2yv",
-            "flashvars": {
-                "streamerType": "auto",
-                "autoMute": false,
-                "autoPlay": false,
-                "userAgentPlayerRules": {
-                    "loadingPolicy": "onDemand",
-                    "disableForceMobileHTML5": "true",
-                    "r1RegMatch": "/Chrome/(1[5-9]|[1-9][0-9]+)/",
-                    "r1LeadWithHTML5": "true",
-                    "r2Match": "Firefox/3.6",
-                    "r2ForceFlash": "true",
-                    "r3Match": "iPhone",
-                    "r3LeadWithHTML5": "true",
-                    "r4RegMatch": "/Firefox/([4-9]|[0-9][0-9])/",
-                    "r4LeadWithHTML5": "true",
-                    "r5RegMatch": "/Safari/([?]|[?][?])/",
-                    "r5LeadWithHTML5": "true",
+        function loadKwidget() {
+            mw.setConfig("Kaltura.EnableEmbedUiConfJs", true);
+            window.adCacheBreaker = (Math.random() * 10).toString().replace(/\./g, "").substring(0, 10);
+            window.adPageUrl = encodeURI(window.location.href);
+            kWidget.embed({
+                "targetId": "epiphany_player_8072949567",
+                "wid": "_102",
+                "uiconf_id": 11601813,
+                "entry_id": "0_i6aro2yv",
+                "flashvars": {
+                    "streamerType": "auto",
+                    "autoMute": false,
+                    "autoPlay": false,
+                    "userAgentPlayerRules": {
+                        "loadingPolicy": "onDemand",
+                        "disableForceMobileHTML5": "true",
+                        "r1RegMatch": "/Chrome/(1[5-9]|[1-9][0-9]+)/",
+                        "r1LeadWithHTML5": "true",
+                        "r2Match": "Firefox/3.6",
+                        "r2ForceFlash": "true",
+                        "r3Match": "iPhone",
+                        "r3LeadWithHTML5": "true",
+                        "r4RegMatch": "/Firefox/([4-9]|[0-9][0-9])/",
+                        "r4LeadWithHTML5": "true",
+                        "r5RegMatch": "/Safari/([?]|[?][?])/",
+                        "r5LeadWithHTML5": "true",
+                    },
+                    "vast": {
+                        "plugin": true,
+                        "width": "0%",
+                        "height": "0%",
+                        "includeInLayout": false,
+                        "relativeTo": "PlayerHolder",
+                        "position": "before",
+                        "prerollUrl": "http://u-ads.adap.tv/a/h/CbyYsMcIh10+XoGWvwRuGArwmci9atPoLiGQaGjtyrT4ht6z4qOJpQ==?cb={cachebreaker}&pageUrl=http%3A%2F%2Ftest.com&eov=eov",
+                        "numPreroll": "1",
+                        "storeSession": false,
+                        "preSequence": "1",
+                        "htmlCompanions": "testCompanion:300:250;testLongCompanion:728:90;",
+                        "timeout": "4"
+                    }
                 },
-                "vast": {
-                    "plugin": true,
-                    "width": "0%",
-                    "height": "0%",
-                    "includeInLayout": false,
-                    "relativeTo": "PlayerHolder",
-                    "position": "before",
-                    "prerollUrl": "http://u-ads.adap.tv/a/h/CbyYsMcIh10+XoGWvwRuGArwmci9atPoLiGQaGjtyrT4ht6z4qOJpQ==?cb={cachebreaker}&pageUrl=http%3A%2F%2Ftest.com&eov=eov",
-                    "numPreroll": "1",
-                    "storeSession": false,
-                    "preSequence": "1",
-                    "htmlCompanions": "testCompanion:300:250;testLongCompanion:728:90;",
-                    "timeout": "4"
-                }
-            },
-            "cache_st": 8072949567,
-            "params": {
-                "wmode": "opaque"
-            },
-            "adsOnReplay": true
-        });
-        kWidget.addReadyCallback( function( playerId ){
-            var kdp = document.getElementById( playerId );
+                "cache_st": 8072949567,
+                "params": {
+                    "wmode": "opaque"
+                },
+                "adsOnReplay": true
+            });
+            kWidget.addReadyCallback( function( playerId ){
+                var kdp = document.getElementById( playerId );
 
 
-            window.playVideo = function () {
-                kdp.sendNotification("doPlay");
-            };
+                window.playVideo = function () {
+                    kdp.sendNotification("doPlay");
+                };
 
 
-            kdp.kBind( 'mediaReady', function(){
-                // Seek to 30 seconds from the start of the video
-                console.warn("mediaReady");
+                kdp.kBind( 'mediaReady', function(){
+                    // Seek to 30 seconds from the start of the video
+                    console.warn("mediaReady");
 
-                TaxiInteractiveUtils.broadcastMessage("log",{text:"DO SOMETHING!!!"});
-                TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
-                alert("MEDIA READY!");
-                //kdp.sendNotification("doPlay");
-            })
-        });
+                    TaxiInteractiveUtils.broadcastMessage("log",{text:"DO SOMETHING!!!"});
+                    TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
+                    alert("MEDIA READY!");
+                    //kdp.sendNotification("doPlay");
+                })
+            });
+        }
+        startKPlayer();
     }
-    startKPlayer();
+
+
 
 </script>
 
