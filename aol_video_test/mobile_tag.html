@@ -18,8 +18,11 @@
 
     <link rel="pingback" href="http://adsymbiot.com/xmlrpc.php"/>
 
+    <script src="TaxiInteractiveUtils.js"></script>
+
     <!--[if lt IE 9]>
     <script src="http://adsymbiot.com/wp-content/themes/Divi/js/html5.js" type="text/javascript"></script>
+
     <![endif]-->
 
     <script type="text/javascript">
@@ -315,6 +318,8 @@
             kdp.kBind( 'mediaReady', function(){
                 // Seek to 30 seconds from the start of the video
                 console.warn("mediaReady");
+                TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
+
                 //alert("MEDIA READY!");
                 //kdp.sendNotification("doPlay");
             })
