@@ -268,10 +268,10 @@
                 "flashvars": {
                     "streamerType": "auto",
                     "autoMute": false,
-                    "autoPlay": true,
-                    "controlBarContainer.plugin":true,
-                    'largePlayBtn.plugin': true,
-                    'loadingSpinner.plugin': true,
+                    "autoPlay": false,
+                    "controlBarContainer.plugin":false,
+                    'largePlayBtn.plugin': false,
+                    'loadingSpinner.plugin': false,
                     'disableOnScreenClick': true,
                     "userAgentPlayerRules": {
                         "forceMobileHTML5":true,
@@ -309,17 +309,79 @@
                 },
                 "adsOnReplay": true
             });
+
+            kWidget.embed({
+                "targetId": "epiphany_player_second",
+                "wid": "_102",
+                "uiconf_id": 11601813,
+                "entry_id": "0_i6aro2yv",
+                "flashvars": {
+                    "streamerType": "auto",
+                    "autoMute": false,
+                    "autoPlay": true,
+                    "controlBarContainer.plugin":true,
+                    'largePlayBtn.plugin': true,
+                    'loadingSpinner.plugin': true,
+                    'disableOnScreenClick': false,
+                    "userAgentPlayerRules": {
+                        "forceMobileHTML5":true,
+                        "loadingPolicy": "onDemand",
+                        "disableForceMobileHTML5": "false",
+                        "r1RegMatch": "/Chrome/(1[5-9]|[1-9][0-9]+)/",
+                        "r1LeadWithHTML5": "true",
+                        "r2Match": "Firefox/3.6",
+                        "r2ForceFlash": "true",
+                        "r3Match": "iPhone",
+                        "r3LeadWithHTML5": "true",
+                        "r4RegMatch": "/Firefox/([4-9]|[0-9][0-9])/",
+                        "r4LeadWithHTML5": "true",
+                        "r5RegMatch": "/Safari/([?]|[?][?])/",
+                        "r5LeadWithHTML5": "true"
+                    },
+                    "vast": {
+                        "plugin": true,
+                        "width": "0%",
+                        "height": "0%",
+                        "includeInLayout": false,
+                        "relativeTo": "PlayerHolder",
+                        "position": "before",
+                        "prerollUrl": "http://u-ads.adap.tv/a/h/CbyYsMcIh10+XoGWvwRuGArwmci9atPoLiGQaGjtyrT4ht6z4qOJpQ==?cb={cachebreaker}&pageUrl=http%3A%2F%2Ftest.com&eov=eov",
+                        "numPreroll": "1",
+                        "storeSession": false,
+                        "preSequence": "1",
+                        "htmlCompanions": "testCompanion:300:250;testLongCompanion:728:90;",
+                        "timeout": "4"
+                    }
+                },
+                "cache_st": 8072949567,
+                "params": {
+                    "wmode": "opaque"
+                },
+                "adsOnReplay": true
+            });
+
+            window.readyPlayers = [];
+
             kWidget.addReadyCallback( function( playerId ){
                 var kdp = document.getElementById( playerId );
+                console.warn(playerId);
 
 
                 window.playVideo = function () {
-                    kdp.sendNotification("doPlay");
+
+                    for(var i=0;i<window.readyPlayers.length;i++){
+                        var playerName = window.readyPlayers[i];
+                        var player = document.getElementById(playerName);
+                        player.sendNotification("doPlay");
+                    }
+
+                    //kdp.sendNotification("doPlay");
                 };
 
 
                 kdp.kBind( 'mediaReady', function(){
                     // Seek to 30 seconds from the start of the video
+                    window.readyPlayers.push(playerId);
                     console.warn("mediaReady");
                     TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
 
@@ -337,7 +399,9 @@
 <div class="entry-content">
     <div style="width: 100%;height: 100%;">
         <div id="dummy_8072949567" style="margin-top: 56.25%"></div>
-        <div id="epiphany_player_8072949567" style="position:absolute;top:0px;left: 0px;right: 0px;bottom: 0px;"></div>
+        <!--<div id="epiphany_player_8072949567" style="position:absolute;top:0px;left: 0px;right: 0px;bottom: 0px;"></div>-->
+        <div id="epiphany_player_8072949567" style="position:absolute;top:0px;left: 0px; width: 400px; height: 300px"></div>
+        <div id="epiphany_player_second" style="position:absolute;top:300px;left: 0px; width: 400px; height: 300px"></div>
     </div>
 </div>
 <!-- .entry-content -->
