@@ -379,6 +379,14 @@
                 };
 
 
+                kdp.kBind( 'mediaError', function(){
+                    console.warn("mediaError");
+                });
+
+                kdp.kBind( 'mediaLoaded', function(){
+                    console.warn("mediaLoaded");
+                });
+
                 kdp.kBind( 'mediaReady', function(){
                     // Seek to 30 seconds from the start of the video
                     window.readyPlayers.push(playerId);
@@ -386,7 +394,7 @@
                     TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
 
                     kdp.sendNotification("doPlay");
-                })
+                });
             });
         }
         startKPlayer();
