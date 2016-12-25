@@ -252,8 +252,12 @@
 
         function startKPlayer() {
             loadjsfile("http://cms.epiphany.digital/p/102/sp/10200/embedIframeJs/uiconf_id/11601813/partner_id/102", function () {
-                loadKwidget()
+                loadKwidget();
             });
+
+            /*loadjsfile("http://cdnapi.kaltura.com/p/102/sp/10200/embedIframeJs/uiconf_id/11601813/partner_id/102", function () {
+               loadKwidget();
+            });*/
         }
 
         function loadKwidget() {
@@ -289,16 +293,18 @@
                         "r5LeadWithHTML5": "true"
                     },
                     "vast": {
-                        "plugin": true,
-                        "width": "0%",
-                        "height": "0%",
+                        //"plugin": true,
+                        //"width": "0%",
+                        //"height": "0%",
                         "includeInLayout": false,
                         "relativeTo": "PlayerHolder",
-                        "position": "before",
-                        "prerollUrl": "http://u-ads.adap.tv/a/h/CbyYsMcIh10+XoGWvwRuGArwmci9atPoLiGQaGjtyrT4ht6z4qOJpQ==?cb={cachebreaker}&pageUrl=http%3A%2F%2Ftest.com&eov=eov",
+                        //"position": "before",
+                        //"prerollUrl": "http://u-ads.adap.tv/a/h/CbyYsMcIh10+XoGWvwRuGArwmci9atPoLiGQaGjtyrT4ht6z4qOJpQ==?cb={cachebreaker}&pageUrl=http%3A%2F%2Ftest.com&eov=eov",
+                        "prerollUrl": "http://projects.kaltura.com/MichalR/vast3_demo.xml",
                         "numPreroll": "1",
                         "storeSession": false,
                         "preSequence": "1",
+                        "postSequence": "1",
                         "htmlCompanions": "testCompanion:300:250;testLongCompanion:728:90;",
                         "timeout": "4"
                     }
@@ -310,55 +316,7 @@
                 "adsOnReplay": true
             });
 
-            kWidget.embed({
-                "targetId": "epiphany_player_second",
-                "wid": "_102",
-                "uiconf_id": 11601813,
-                "entry_id": "0_i6aro2yv",
-                "flashvars": {
-                    "streamerType": "auto",
-                    "autoMute": false,
-                    "autoPlay": true,
-                    "controlBarContainer.plugin":false,
-                    'largePlayBtn.plugin': false,
-                    'loadingSpinner.plugin': false,
-                    'disableOnScreenClick': true,
-                    "userAgentPlayerRules": {
-                        "forceMobileHTML5":true,
-                        "loadingPolicy": "onDemand",
-                        "disableForceMobileHTML5": "false",
-                        "r1RegMatch": "/Chrome/(1[5-9]|[1-9][0-9]+)/",
-                        "r1LeadWithHTML5": "true",
-                        "r2Match": "Firefox/3.6",
-                        "r2ForceFlash": "true",
-                        "r3Match": "iPhone",
-                        "r3LeadWithHTML5": "true",
-                        "r4RegMatch": "/Firefox/([4-9]|[0-9][0-9])/",
-                        "r4LeadWithHTML5": "true",
-                        "r5RegMatch": "/Safari/([?]|[?][?])/",
-                        "r5LeadWithHTML5": "true"
-                    },
-                    "vast": {
-                        "plugin": true,
-                        "width": "0%",
-                        "height": "0%",
-                        "includeInLayout": false,
-                        "relativeTo": "PlayerHolder",
-                        "position": "before",
-                        "prerollUrl": "http://u-ads.adap.tv/a/h/CbyYsMcIh10+XoGWvwRuGArwmci9atPoLiGQaGjtyrT4ht6z4qOJpQ==?cb={cachebreaker}&pageUrl=http%3A%2F%2Ftest.com&eov=eov",
-                        "numPreroll": "1",
-                        "storeSession": false,
-                        "preSequence": "1",
-                        "htmlCompanions": "testCompanion:300:250;testLongCompanion:728:90;",
-                        "timeout": "4"
-                    }
-                },
-                "cache_st": 8072949567,
-                "params": {
-                    "wmode": "opaque"
-                },
-                "adsOnReplay": true
-            });
+
 
             window.readyPlayers = [];
 
@@ -378,7 +336,6 @@
                     //kdp.sendNotification("doPlay");
                 };
 
-
                 kdp.kBind( 'mediaError', function(){
                     console.warn("mediaError");
                 });
@@ -392,8 +349,7 @@
                     window.readyPlayers.push(playerId);
                     console.warn("mediaReady");
                     TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
-
-                    kdp.sendNotification("doPlay");
+                    //kdp.sendNotification("doPlay");
                 });
             });
         }
