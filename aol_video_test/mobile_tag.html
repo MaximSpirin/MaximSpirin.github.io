@@ -272,7 +272,7 @@
                 "flashvars": {
                     "streamerType": "auto",
                     "autoMute": false,
-                    "autoPlay": true,
+                    "autoPlay": false,
                     "controlBarContainer.plugin":true,
                     'largePlayBtn.plugin': true,
                     'loadingSpinner.plugin': true,
@@ -325,7 +325,7 @@
                 "flashvars": {
                     "streamerType": "auto",
                     "autoMute": false,
-                    "autoPlay": true,
+                    "autoPlay": false,
                     "controlBarContainer.plugin":true,
                     'largePlayBtn.plugin': true,
                     'loadingSpinner.plugin': true,
@@ -385,7 +385,6 @@
                         player.sendNotification("doPlay");
                     }
 
-                    //kdp.sendNotification("doPlay");
                 };
 
                 kdp.kBind( 'mediaError', function(){
@@ -408,7 +407,14 @@
         startKPlayer();
     }
 
+    window.playBtnHandler = function () {
+        try{
+            Android.playHTML5Video();
+        }catch(error){
+            alert("Failed to call Android.playHTML5Video()");
+        }
 
+    }
 
 </script>
 
@@ -425,6 +431,8 @@
 
 
 <br/>
+
+<button id="playVideoBtn" style="position: absolute; left:440px; top: 10px">Play video</button>
 
 </body>
 
