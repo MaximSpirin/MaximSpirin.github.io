@@ -18,7 +18,7 @@
 
     <link rel="pingback" href="http://adsymbiot.com/xmlrpc.php"/>
 
-    <script src="https://maximspirin.github.io/aol_video_test/TaxiInteractiveUtils.js"></script>
+    <!--<script src="https://maximspirin.github.io/aol_video_test/TaxiInteractiveUtils.js"></script>-->
 
     <!--[if lt IE 9]>
     <script src="http://adsymbiot.com/wp-content/themes/Divi/js/html5.js" type="text/javascript"></script>
@@ -239,7 +239,7 @@
 
 
     function bodyLoadHandler() {
-        TaxiInteractiveUtils.initialize();
+        //TaxiInteractiveUtils.initialize();
 
 
         window.autoPlayMedia = function () {
@@ -399,7 +399,7 @@
                     // Seek to 30 seconds from the start of the video
                     window.readyPlayers.push(playerId);
                     console.warn("mediaReady");
-                    TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
+                    //TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"playVideo"});
                     //kdp.sendNotification("doPlay");
                 });
             });
@@ -409,7 +409,7 @@
 
     window.playBtnHandler = function () {
         try{
-            Android.playHTML5Video();
+            window.Android.playHTML5Video();
         }catch(error){
             alert("Failed to call Android.playHTML5Video()");
         }
