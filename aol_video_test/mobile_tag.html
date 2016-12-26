@@ -376,17 +376,6 @@
                 var kdp = document.getElementById( playerId );
                 console.warn(playerId);
 
-
-                window.playVideo = function () {
-
-                    for(var i=0;i<window.readyPlayers.length;i++){
-                        var playerName = window.readyPlayers[i];
-                        var player = document.getElementById(playerName);
-                        player.sendNotification("doPlay");
-                    }
-
-                };
-
                 kdp.kBind( 'mediaError', function(){
                     console.warn("mediaError");
                 });
@@ -407,10 +396,22 @@
         startKPlayer();
     }
 
+    window.playVideo = function () {
+
+        var player1 = document.getElementById("epiphany_player_8072949567");
+        player1.sendNotification("doPlay");
+
+        var player2 = document.getElementById("kaltura_player_1360356455");
+        player2.sendNotification("doPlay");
+
+    };
+
     window.playBtnHandler = function () {
         try{
+            window.playVideo();
             window.Android.playHTML5Video();
         }catch(error){
+
             alert("Failed to call Android.playHTML5Video()");
         }
 
