@@ -17,21 +17,11 @@
 
 
 
-    <script onload="playerLoadedHandler()" type="text/javascript" src="//www.oculu.com/im4/im_initiate.php?key=851f7b4608ec16347fb1f1c572b6348d&auto_ep=1022513423"></script>
+    <script type="text/javascript" src="//www.oculu.com/im4/im_initiate.php?key=851f7b4608ec16347fb1f1c572b6348d&auto_ep=1022513423"></script>
 
-
-    <button onclick="buttonPressHandler()">PLAY VIDEO</button>
 
     <script>
-        
 
-
-        function buttonPressHandler() {
-            var me = new MouseEvent("click");
-            me.screenX = 30;
-            me.screenY = 30;
-            window.dispatchEvent(me);
-        }
         
         function bodyLoaded() {
 
@@ -99,7 +89,7 @@
         //starts ad video playback
         window.autoPlayMedia = function () {
             alert("AUTOPLAY!");
-            im_html5_asset('1022513423','ep');
+            $("#im_startAsset").trigger('click');
         }
 
     </script>
