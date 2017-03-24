@@ -61,22 +61,7 @@
 
             }
 
-
-
-            /*var eventObject = new Event("playerMessage");
-            eventObject.im_event = im_event;*/
-
-            //window.dispatchEvent(eventObject);
-            //window.dispatchEvent(new Event("playerMessage"));
-
-            //try{
-                parent.window.sayHelloFromIframe(im_event);
-            //}catch (error){
-             //   console.error("Failed to invoke sayHelloFromIframe");
-             //   console.error(error);
-            //}
-
-
+            parent.postMessage("hello there!", "http://maximspirin.github.io");
 
             console.warn("[" +  getFormattedTime()+  "] " + "im_event: "+ im_event);
         };
