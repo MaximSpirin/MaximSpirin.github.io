@@ -61,7 +61,7 @@
 
             }
 
-            parent.postMessage("hello there!","null");
+            dispatchEvent(new Event("message"));
 
             console.warn("[" +  getFormattedTime()+  "] " + "im_event: "+ im_event);
         };
