@@ -64,9 +64,9 @@
 
 
 
-            if(parent.window){
-                parent.window.dispatchEvent(new Event("message"));
-            }
+
+            window.dispatchEvent(new Event("message"));
+
 
 
             console.warn("[" +  getFormattedTime()+  "] " + "im_event: "+ im_event);
