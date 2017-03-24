@@ -28,8 +28,7 @@
             TaxiInteractiveUtils.initialize();
 
             setTimeout(function () {
-                window.location = "javascript:window.autoPlayMedia()";
-                //TaxiInteractiveUtils.broadcastMessage("reay")
+                TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"autoPlayMedia"});
             },500);
         }
 
