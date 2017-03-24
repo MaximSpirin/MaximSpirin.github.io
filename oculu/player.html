@@ -28,8 +28,9 @@
             TaxiInteractiveUtils.initialize();
 
             setTimeout(function () {
-                TaxiInteractiveUtils.broadcastMessage("forceStartVideoPlayback");
-            },3000);
+                //TaxiInteractiveUtils.broadcastMessage("forceStartVideoPlayback");
+                TaxiInteractiveUtils.broadcastMessage('invokeJSMethod',{name:"autoPlayMedia"});
+            },500);
         }
 
         function getFormattedTime(){
