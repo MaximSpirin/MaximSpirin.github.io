@@ -66,7 +66,8 @@
             var eventObject = new Event("playerMessage");
             eventObject.im_event = im_event;
 
-            window.dispatchEvent(eventObject);
+            //window.dispatchEvent(eventObject);
+            window.dispatchEvent(new Event("playerMessage"));
 
 
 
