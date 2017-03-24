@@ -27,17 +27,12 @@
 
             TaxiInteractiveUtils.initialize();
 
-            setTimeout(function () {
-                TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"autoPlayMedia"});
-            },500);
+
 
             setTimeout(function () {
-                TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"autoPlayMedia"});
-            },1500);
-
-            setTimeout(function () {
-                TaxiInteractiveUtils.broadcastMessage("invokeJSMethod",{name:"autoPlayMedia"});
-            },2500);
+                alert("ALO?");
+                TaxiInteractiveUtils.broadcastMessage("forceStartVideoPlayback");
+            },5000);
         }
 
         function getFormattedTime(){
