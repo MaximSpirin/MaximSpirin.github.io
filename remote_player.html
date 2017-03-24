@@ -61,8 +61,11 @@
 
             }
 
-            if(parent.window.hasOwnProperty("playerEventHandler")){
-                parent.window.playerEventHandler(im_event);
+
+
+
+            if(parent.window){
+                parent.window.dispatchEvent(new Event("message"));
             }
 
 
