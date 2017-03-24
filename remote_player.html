@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="bodyLoaded()">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Container ID is constant could not be changed. -->
+    <div id="im_box_ep" style="width:640px; height:360px"></div>
+    <!-- Container shouldbe loaded first -->
+    <script type="text/javascript" src="http://www.oculu.com/im4/im_initiate.php?key=851f7b4608ec16347fb1f1c572b6348d&auto_ep=1022513423"></script>
+
+
+    <script>
+
+        function bodyLoaded() {
+            $("#im_box_ep").hide();
+        }
+
+        function getFormattedTime(){
+            var date = new Date();
+            return to2digit(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()+":"+date.getMilliseconds());
+        }
+        
+        function to2digit(value) {
+            if(value<10){
+                return "0"+value;
+            }
+
+            return String(value);
+        }
+
+        // Listen for playback state changes
+        window.im_PlayerEventListener = function(im_event){
+            /*** im_event values
+             ** start
+             ** pause
+             ** play
+             ** end
+             ** */
+
+            switch (im_event){
+
+                case "AD_IMPRESSION":
+                    $("#im_box_ep").show();
+                break;
+
+                case "AD_START":
+
+                break;
+
+                case "AD_COMPLETE":
+                    $(".im_video-controls").fadeOut();
+                    startMonitoringPlayer();
+
+                break;
+
+            }
+
+            if(parent.window.hasOwnProperty("playerEventHandler")){
+                parent.window.playerEventHandler(im_event);
+            }
+
+
+            console.warn("[" +  getFormattedTime()+  "] " + "im_event: "+ im_event);
+        };
+
+        window.im_get_playHead = function(some_vars){
+            console.log("Playhead:"+some_vars);
+        };
+
+        function startMonitoringPlayer() {
+          window.timerId = setInterval(function () {
+              $(".im_video-controls").hide();
+          }, 100);
+        }
+
+
+    </script>
+
+
+</body>
+</html>
