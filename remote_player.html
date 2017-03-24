@@ -61,7 +61,10 @@
 
             }
 
-            dispatchEvent(new Event("message"));
+            var event = new Event("message");
+            dispatchEvent(event);
+
+
 
             console.warn("[" +  getFormattedTime()+  "] " + "im_event: "+ im_event);
         };
