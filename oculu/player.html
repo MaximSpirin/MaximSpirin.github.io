@@ -27,7 +27,10 @@
 
             TaxiInteractiveUtils.initialize();
 
-            //$("#im_box_ep").hide();
+            setTimeout(function () {
+                window.location = "javascript:window.autoPlayMedia()";
+                //TaxiInteractiveUtils.broadcastMessage("reay")
+            },500);
         }
 
         function getFormattedTime(){
