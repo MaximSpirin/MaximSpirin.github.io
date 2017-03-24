@@ -67,7 +67,13 @@
             eventObject.im_event = im_event;*/
 
             //window.dispatchEvent(eventObject);
-            window.dispatchEvent(new Event("playerMessage"));
+            //window.dispatchEvent(new Event("playerMessage"));
+
+            try{
+                parent.window.sayHelloFromIframe(im_event);
+            }catch (error){
+                console.error("Failed to invoke sayHelloFromIframe");
+            }
 
 
 
