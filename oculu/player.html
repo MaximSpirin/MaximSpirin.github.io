@@ -67,7 +67,9 @@
                 break;
 
                 case "AD_COMPLETE":
-                    $(".im_video-controls").fadeOut();
+                    //$(".im_video-controls").fadeOut();
+                    console.log("barabulea!");
+                    TaxiInteractiveUtils.broadcastMessage("programmatic_ad_complete");
                 break;
 
                 case "AD_ERROR":
