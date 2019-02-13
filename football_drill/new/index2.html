@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>Football drills</title>
+        <link rel="stylesheet" type="text/css" href="css/draft.css"/>
+        <link rel="stylesheet" href="external/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    </head>
+
+    <body>
+
+    <!-- Load jQuery -->
+    <script  src="external/jquery/jquery.js" onload="console.log('jquery loaded')"></script>
+
+    <!-- Load bootstrap -->
+    <script src="external/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+    <!---------------------------------------------- CreateJS libs ----------------------------------------------->
+
+    <!--Non-minified versions-->
+    <!-- <script  src="external/createjs/easeljs-0.8.1.combined.js"></script> -->
+    <!-- <script  src="external/createjs/preloadjs-0.6.1.combined.js"></script> -->
+    <!-- <script  src="production/drillEditor-0.1.8.min.js"></script> -->
+    <!--------------------->
+
+    <!--Minified versions-->
+    <script  src="external/createjs/easeljs-0.8.1.min.js" onload="console.log('easeljs loaded')"></script>
+    <script  src="external/createjs/preloadjs-0.6.1.min.js"></script>
+    <!--------------------->
+    
+    <!-- app container -->
+    <div id="appContainer">
+            
+        <!--
+        <canvas id="appCanvas" width="800" height="600">
+
+        </canvas>
+
+        -->
+
+        <!-- 
+            <div id="main_menu"></div>
+
+        -->
+        
+        <div id="main_menu" class="flex-container">
+                <div class="aligner-item">
+                    <p>
+                        <div class="btn btn-default btn-lg">Create new drill</div>    
+                    </p>
+                    
+                    <p>
+                        <div class="btn btn-default btn-lg">Load saved drill</div>
+                    </p>
+                    
+                    
+
+                    <!-- <div class = "btn-group-justified btn-group-sm btn-group-vertical">
+                            <button type = "button" class = "btn btn-primary">ITC Limited</button>
+                            <button type = "button" class = "btn btn-default">Colgate-Palmolive</button>
+                            <button type = "button" class = "btn btn-primary">Nestle</button>
+                            <button type = "button" class = "btn btn-default">Britannia Industries Limited</button>
+                    </div> -->
+                </div>
+        </div>
+
+
+    </div>
+
+
+    </body>
