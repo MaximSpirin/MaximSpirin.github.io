@@ -87,12 +87,11 @@ this.drillEditor = this.drillEditor || {};
 
         drillEditor.DrillEditorProxy.getDrillDataById(drillId, getDrillDataSuccess, getDrillDataFailure, this);
 
-
         function getDrillDataSuccess(drillDTO){
             this.presentationController.loadPresentation(drillDTO);
             this.showAppScreen(drillEditor.AppScreen.EDITOR);//  scope.currentScreen.removeForm();
         }
-
+        
         function getDrillDataFailure(){
             this.currentScreen.removeForm();
             //TODO - show error message panel
@@ -134,6 +133,7 @@ this.drillEditor = this.drillEditor || {};
     };
 
     p.onAssetLoadComplete = function(evt){
+
         this.applicationModel.assetsLoaded = true;
         console.log('Application assets loaded!');
 
@@ -189,7 +189,7 @@ this.drillEditor = this.drillEditor || {};
     p.loadExternalAssets = function(){
         //load all external files required by app
         var manifest = [
-            {id:"main-menu-background", src:"img/background_2_800_600.jpg", type:createjs.AbstractLoader.IMAGE},
+            //{id:"main-menu-background", src:"img/background_2_800_600.jpg", type:createjs.AbstractLoader.IMAGE},
             {id:"rotation-icon", src:"img/rotating22.png", type:createjs.AbstractLoader.IMAGE},
             {id:"soccer-ball-icon", src:"img/soccer-ball-icon-32.png", type:createjs.AbstractLoader.IMAGE},
             {id:"ball-supply-icon", src:"img/ball-supply-icon-26.png", type:createjs.AbstractLoader.IMAGE},

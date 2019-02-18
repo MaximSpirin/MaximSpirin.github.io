@@ -7,6 +7,14 @@
         <title>Football drills</title>
         <link rel="stylesheet" type="text/css" href="css/draft.css"/>
         <link rel="stylesheet" href="external/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+        
+
+        <style>
+            
+        
+
+        </style>
+
     </head>
 
     <body>
@@ -17,6 +25,8 @@
     <!-- Load bootstrap -->
     <script src="external/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 
+    
+
     <!---------------------------------------------- CreateJS libs ----------------------------------------------->
 
     <!--Non-minified versions-->
@@ -26,48 +36,171 @@
     <!--------------------->
 
     <!--Minified versions-->
-    <script  src="external/createjs/easeljs-0.8.1.min.js" onload="console.log('easeljs loaded')"></script>
-    <script  src="external/createjs/preloadjs-0.6.1.min.js"></script>
+    <!--<script  src="external/createjs/easeljs-0.8.1.min.js" onload="console.log('easeljs loaded')"></script> -->
+    <!-- <script  src="external/createjs/preloadjs-0.6.1.min.js"></script> -->
+
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js" onload="console.log('easeljs loaded')"></script>
+    <script src="https://code.createjs.com/1.0.0/preloadjs.min.js"></script>
+
+    <!-- Load Drill Editor application -->
+    <script  src="js/DrillEditorApplication.js" onload="console.log('drill editor loaded')"></script>
+    <script  src="js/events/ApplicationEvent.js"></script>
+    <script  src="js/events/PresentationViewEvent.js"></script>
+    <script  src="js/utils/StringUtils.js"></script>
+    <script  src="js/utils/DrawingUtils.js"></script>
+    <script src="js/utils/Clipboard.js"></script>
+    <script src="js/utils/MathUtils.js"></script>
+    <script src="js/utils/DTOUtils.js"></script>
+    <script src="js/utils/CanvasUtils.js"></script>
+    <script  src="js/view/screens/AppScreen.js"></script>
+    <script  src="js/view/screens/MainMenuScreen.js"></script>
+    <script  src="js/view/screens/Editor.js"></script>
+    <script  src="js/view/ui/SimpleTextButton.js"></script>
+    <script  src="js/view/forms/Form.js"></script>
+    <script  src="js/view/forms/LoadDrillView.js"></script>
+    <script  src="js/view/forms/PitchSizeInputFormHTML.js"></script>
+    <script  src="js/view/forms/ProgressBarForm.js"></script>
+    <script  src="js/view/forms/ErrorDialogForm.js"></script>
+    <script  src="js/view/ui/ToolsPanel.js"></script>
+    <script src="js/view/tools/TransformTool.js"></script>
+    <script src="js/view/tools/RotationTool.js"></script>
+    <script src="js/view/ui/ComponentsPallete.js"></script>
+    <script src="js/view/pitch/Pitch.js"></script>
+    <script src="js/view/pitch/components/BaseComponentRenderer.js"></script>
+    <script src="js/view/pitch/components/RectComponent.js"></script>
+    <script src="js/view/pitch/components/SquareComponent.js"></script>
+    <script src="js/view/pitch/SizeHint.js"></script>
+    <script src="js/view/pitch/components/ArchedArrow.js"></script>
+    <script src="js/view/pitch/components/PrimitiveShapeRenderer.js"></script>
+    <script src="js/view/pitch/components/DribblingLineSegment.js"></script>
+    <script src="js/view/pitch/components/DribblingLine.js"></script>
+    <script src="js/view/pitch/components/PlayerMovementLine.js"></script>
+    <script src="js/view/pitch/components/BallMovementLine.js"></script>
+    <script src="js/view/pitch/components/BallComponent.js"></script>
+    <script src="js/view/pitch/components/BallSupplyComponent.js"></script>
+    <script src="js/view/pitch/components/Goal.js"></script>
+    <script  src="js/model/vo/Presentation.js"></script>
+    <script  src="js/model/vo/GraphicItemVO.js"></script>
+    <script  src="js/model/vo/RectVO.js"></script>
+    <script  src="js/model/constants/GraphicElementType.js"></script>
+    <script src="js/model/vo/SquareVO.js"></script>
+    <script src="js/model/vo/AttackerVO.js"></script>
+    <script src="js/model/vo/DefenderVO.js"></script>
+    <script src="js/model/vo/ExtraTeamVO.js"></script>
+    <script src="js/model/vo/NeutralVO.js"></script>
+    <script src="js/model/vo/ConeVO.js"></script>
+    <script src="js/model/vo/ArchedArrowVO.js"></script>
+    <script src="js/model/vo/DribblingLineVO.js"></script>
+    <script src="js/model/vo/PlayerMovementVO.js"></script>
+    <script src="js/model/vo/BallMovementVO.js"></script>
+    <script src="js/model/vo/BallVO.js"></script>
+    <script src="js/model/vo/BallSupplyVO.js"></script>
+    <script src="js/model/vo/GoalVO.js"></script>
+    <script src="js/model/constants/ArrowDirection.js"></script>
+    <script src="js/dispatcher/Dispatcher.js"></script>
+    <script src="js/model/ApplicationModel.js"></script>
+    <script src="js/controller/PresentationController.js"></script>
+
+    <script src="js/utils/DrillEditorProxy.js"></script>
     <!--------------------->
     
+    <script>
+        $(document).ready(function(){
+            drillEditor.DrillEditorProxy.drillStartupData = null;
+            window.drillEditorApplication = new drillEditor.DrillEditorApplication();
+        });
+    </script>
+
+
     <!-- app container -->
     <div id="appContainer">
-            
-        <!--
-        <canvas id="appCanvas" width="800" height="600">
 
-        </canvas>
-
-        -->
-
+        <div style='position: absolute; padding-top: 10px; padding-left: 10px '>
+                <button id='pitchInputFormBackButton' type='button' class='btn btn-default btn-lg'> 
+                    <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>Back
+                </button>     
+        </div>
+        
+    <!-- <canvas id="appCanvas" width="800" height="600"></canvas> -->
+        
         <!-- 
             <div id="main_menu"></div>
-
         -->
         
-        <div id="main_menu" class="flex-container">
+        <div id="main_menu" class="main-menu-container">
                 <div class="aligner-item">
                     <p>
-                        <div class="btn btn-default btn-lg">Create new drill</div>    
+                        <div id="create_new_drill_btn" class="btn btn-default btn-lg">Create new drill</div>    
                     </p>
-                    
+                        
                     <p>
-                        <div class="btn btn-default btn-lg">Load saved drill</div>
+                        <div id="load_drill_btn" class="btn btn-default btn-lg">Load saved drill</div>
                     </p>
-                    
-                    
-
-                    <!-- <div class = "btn-group-justified btn-group-sm btn-group-vertical">
-                            <button type = "button" class = "btn btn-primary">ITC Limited</button>
-                            <button type = "button" class = "btn btn-default">Colgate-Palmolive</button>
-                            <button type = "button" class = "btn btn-primary">Nestle</button>
-                            <button type = "button" class = "btn btn-default">Britannia Industries Limited</button>
-                    </div> -->
                 </div>
         </div>
 
 
-    </div>
+        <div class="new-drill-form-container">
 
+                
+
+            <div class="new-drill-form-panel">
+
+               <!--  <div id='pitchSizeInputFormHTML' class='drill-editor-app-form'> 
+
+                    <div style='position: absolute; padding-top: 10px; padding-left: 10px '>
+                        <button id='pitchInputFormBackButton' type='button' class='btn btn-default'> 
+                            <span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>Back
+                        </button>     
+                    </div> -->
+                    
+                    <!-- <div class='outer'>
+                        <div class='middle'> 
+                            <div class='inner'> 
+                                <div class='container' style='width: inherit; height: 290px; background: #cccccc'> <h2 style='text-align: center'>Enter pitch size</h2>  -->
+                                    
+                                    <h3 style='text-align: center; margin-top: 15px'>Enter pitch size</h3>
+
+                                    <form role='form'> 
+                                        <div class='form-group'> 
+                                            <label style="font-size:16px">Width:</label> 
+                                            <input class='form-control input-lg' id='pitch_width_input' placeholder='Enter width in meters'> 
+                                        </div>
+                                        
+                                        <div class='form-group'> 
+                                            <label style="font-size:16px">Height:</label> 
+                                            <input type='height' id='pitch_height_input' class='form-control input-lg' placeholder='Enter height in meters'> 
+                                        </div>
+                                        
+                                        <!-- <div class='checkbox'> 
+                                            <label> 
+                                                <input id='pitchInputFormUseDefaultCb' type='checkbox'>Use default size - 105 by 68 metres 
+                                            </label> 
+                                        </div> -->
+                                        
+                                        
+                                    
+                                    </form> 
+                                    
+                                    <div class="btn-group" style="padding-top: 5px; width:100%" role="group" aria-label="Basic example">
+                                            <button type="button" style="background-color:white; width:60%" class="btn btn-secondary btn-lg btn-outline-secondary">Use default size</button>
+                                            <button type="button" style="width:40%" class="btn btn-primary btn-lg disabled">Next</button>
+                                    </div>
+
+                                    <!-- <button id='pitchInputFormProceedButton' style="width:120px" type='button' class='btn btn-primary btn-block disabled btn-lg'>Default size</button> 
+                                    <button id='pitchInputFormProceedButton' style="width:120px" type='button' class='btn btn-primary btn-block disabled btn-lg'>Apply</button>
+ -->
+<!--                            </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>-->
+
+
+            </div>
+
+        </div>
+
+    </div>
 
     </body>

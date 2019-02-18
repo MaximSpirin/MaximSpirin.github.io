@@ -45,7 +45,7 @@ this.drillEditor = this.drillEditor || {};
     p.initialize = function(){
         this.presentationController = drillEditor.PresentationController.getInstance();
 
-        //create bg
+        /* //create bg
         this.backgroundShape = new createjs.Shape();
         this.backgroundShape.graphics.beginLinearGradientFill(["#1E5799", "#7db9e8"],[0,1],0,0,0,drillEditor.ApplicationModel.APP_HEIGHT).drawRect(0, 0, drillEditor.ApplicationModel.APP_WIDTH, drillEditor.ApplicationModel.APP_HEIGHT);
         this.addChild(this.backgroundShape);
@@ -97,7 +97,7 @@ this.drillEditor = this.drillEditor || {};
         this.pitchOutline.x = this.pitchViewportBounds.x;
         this.pitchOutline.y = this.pitchViewportBounds.y;
         this.pitchOutline.visible = false;
-        this.addChild(this.pitchOutline);
+        this.addChild(this.pitchOutline); */
 
 
 

@@ -10,13 +10,13 @@ this.drillEditor = this.drillEditor || {};
 (function () {
     "use strict";
 
-    MainMenuScreen.prototype.backgroundImage = null;
+    /* MainMenuScreen.prototype.backgroundImage = null;
     MainMenuScreen.prototype.loadQueue = null;
     MainMenuScreen.prototype.topText = null;
     MainMenuScreen.prototype.mainMenuText = null;
     MainMenuScreen.prototype.copyrighAndVersionText = null;
     MainMenuScreen.prototype.newDrillButton = null;
-    MainMenuScreen.prototype.loadDrillButton = null;
+    MainMenuScreen.prototype.loadDrillButton = null; */
 
     //constructor
     function MainMenuScreen(){
@@ -30,39 +30,45 @@ this.drillEditor = this.drillEditor || {};
     var p = createjs.extend(MainMenuScreen, drillEditor.AppScreen);
 
     p.constructScreenUI = function(){
+        
+        $("#main_menu").css("display", "flex");
+        
+        $("#create_new_drill_btn").click(newDrillClickHandler);
+
+        $("#load_drill_btn").click(loadDrillClickHandler);
 
         //display background
-        this.backgroundImage = new createjs.Bitmap(drillEditor.DrillEditorApplication.loadQueue.getResult("main-menu-background"));
-        this.addChild(this.backgroundImage);
+        /* this.backgroundImage = new createjs.Bitmap(drillEditor.DrillEditorApplication.loadQueue.getResult("main-menu-background"));
+        this.addChild(this.backgroundImage); */
 
         //create header text
-        this.topText = new createjs.Text("Future Lions Drill Tool","35px Arial","#FFFFFF");
+        /* this.topText = new createjs.Text("Future Lions Drill Tool","35px Arial","#FFFFFF");
         this.topText.x = drillEditor.ApplicationModel.APP_WIDTH/2 - this.topText.getBounds().width/2;
         this.topText.y = 10;
-        this.addChild(this.topText);
+        this.addChild(this.topText); */
 
-        this.mainMenuText = new createjs.Text("Main menu","30px Arial","#FFFFFF");
+        /* this.mainMenuText = new createjs.Text("Main menu","30px Arial","#FFFFFF");
         this.mainMenuText.x = drillEditor.ApplicationModel.APP_WIDTH/2 - this.mainMenuText.getBounds().width/2;
         this.mainMenuText.y = 260 - 50;
-        this.addChild(this.mainMenuText);
+        this.addChild(this.mainMenuText); */
 
-        this.copyrighAndVersionText = new createjs.Text("Copyright information. Version " + drillEditor.ApplicationModel.VERSION,"14px Arial","#FFFFFF");
+        /* this.copyrighAndVersionText = new createjs.Text("Copyright information. Version " + drillEditor.ApplicationModel.VERSION,"14px Arial","#FFFFFF");
         this.copyrighAndVersionText.x = drillEditor.ApplicationModel.APP_WIDTH - this.copyrighAndVersionText.getBounds().width - 10;
         this.copyrighAndVersionText.y = drillEditor.ApplicationModel.APP_HEIGHT - 30;
-        this.addChild(this.copyrighAndVersionText);
+        this.addChild(this.copyrighAndVersionText); */
 
         //display menu buttons
-        this.newDrillButton = new drillEditor.SimpleTextButton("New drill","25px Arial", "#000000", "#FFFFFF","#999999","#0000FF", 150, 45);
+        /* this.newDrillButton = new drillEditor.SimpleTextButton("New drill","25px Arial", "#000000", "#FFFFFF","#999999","#0000FF", 150, 45);
         this.newDrillButton.x = drillEditor.ApplicationModel.APP_WIDTH/2 - 150/2;
         this.newDrillButton.y = 260;
         this.newDrillButton.addEventListener("click", newDrillClickHandler);
-        this.addChild(this.newDrillButton);
+        this.addChild(this.newDrillButton); */
 
-        this.loadDrillButton = new drillEditor.SimpleTextButton("Load drill","25px Arial", "#000000", "#FFFFFF","#999999","#0000FF", 150, 45);
+        /* this.loadDrillButton = new drillEditor.SimpleTextButton("Load drill","25px Arial", "#000000", "#FFFFFF","#999999","#0000FF", 150, 45);
         this.loadDrillButton.x = drillEditor.ApplicationModel.APP_WIDTH/2 - 150/2;
         this.loadDrillButton.y = this.newDrillButton.y + 60;
         this.loadDrillClickHandler = this.loadDrillButton.on("click", loadDrillClickHandler, this);
-        this.addChild(this.loadDrillButton);
+        this.addChild(this.loadDrillButton); */
 
     };
 
@@ -87,12 +93,14 @@ this.drillEditor = this.drillEditor || {};
         this.AppScreen_destroy();
 
         //unsubscribe listeners
-        this.newDrillButton.removeAllEventListeners();
+        /* this.newDrillButton.removeAllEventListeners();
         this.newDrillButton.destroy();
 
         this.loadDrillButton.removeAllEventListeners();
         this.loadDrillButton.off("click", this.loadDrillClickHandler);
-        this.loadDrillButton.destroy();
+        this.loadDrillButton.destroy(); */
+
+        $(".main-menu-container").css("display", "none");
 
         console.log("MainMenuScreen.destroy()");
     };
